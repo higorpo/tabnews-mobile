@@ -121,4 +121,12 @@ void main() {
 
     expect(future, throwsA(HttpError.badRequest));
   });
+
+  test('Should return BadRequestError if get returns 400 with no data', () async {
+    mockResponse(400, body: '');
+
+    final future = sut.request(url: uri.toString(), method: 'get');
+
+    expect(future, throwsA(HttpError.badRequest));
+  });
 }
