@@ -1,7 +1,7 @@
 import '../../domain/domain.dart';
 import '../http/http.dart';
 
-class RemoteTopicModel {
+class RemoteContentModel {
   final String id;
   final String ownerId;
   final String? parentId;
@@ -18,7 +18,7 @@ class RemoteTopicModel {
   final String? parentSlug;
   final String? parentUsername;
 
-  RemoteTopicModel({
+  RemoteContentModel({
     required this.id,
     required this.ownerId,
     required this.parentId,
@@ -36,7 +36,7 @@ class RemoteTopicModel {
     required this.parentUsername,
   });
 
-  factory RemoteTopicModel.fromJson(Map json) {
+  factory RemoteContentModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       'id',
       'owner_id',
@@ -57,7 +57,7 @@ class RemoteTopicModel {
       throw HttpError.invalidData;
     }
 
-    return RemoteTopicModel(
+    return RemoteContentModel(
       id: json['id'],
       ownerId: json['owner_id'],
       parentId: json['parent_id'],
@@ -76,15 +76,15 @@ class RemoteTopicModel {
     );
   }
 
-  TopicEntity toEntity() {
-    return TopicEntity(
+  ContentEntity toEntity() {
+    return ContentEntity(
       id: id,
       ownerId: ownerId,
       parentId: parentId,
       slug: slug,
       title: title,
       body: body,
-      status: status == 'published' ? TopicStatus.published : TopicStatus.draft,
+      status: status == 'published' ? ContentStatus.published : ContentStatus.draft,
       sourceUrl: sourceUrl,
       createdAt: DateTime.parse(createdAt),
       updatedAt: DateTime.parse(updatedAt),

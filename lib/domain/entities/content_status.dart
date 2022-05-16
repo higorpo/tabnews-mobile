@@ -1,4 +1,4 @@
-enum TopicStatus {
+enum ContentStatus {
   draft,
   published,
 }

@@ -6,11 +6,11 @@ import 'package:mockito/mockito.dart';
 import 'package:tab_news/data/data.dart';
 import 'package:tab_news/domain/domain.dart';
 
-import 'load_topics_test.mocks.dart';
+import 'load_contents_test.mocks.dart';
 
 @GenerateMocks([HttpClient])
 void main() {
-  late HttpLoadTopics sut;
+  late HttpLoadContents sut;
   late MockHttpClient httpClient;
   late String url;
   late List<Map> list;
@@ -66,7 +66,7 @@ void main() {
   setUp(() {
     url = faker.internet.httpUrl();
     httpClient = MockHttpClient();
-    sut = HttpLoadTopics(url: url, httpClient: httpClient);
+    sut = HttpLoadContents(url: url, httpClient: httpClient);
 
     mockHttpData(mockValidData());
   });
@@ -83,14 +83,14 @@ void main() {
     expect(
       topics,
       [
-        TopicEntity(
+        ContentEntity(
           id: list[0]['id'],
           ownerId: list[0]['owner_id'],
           parentId: list[0]['parent_id'],
           slug: list[0]['slug'],
           title: list[0]['title'],
           body: list[0]['body'],
-          status: TopicStatus.published,
+          status: ContentStatus.published,
           sourceUrl: list[0]['source_url'],
           createdAt: DateTime.parse(list[0]['created_at']),
           updatedAt: DateTime.parse(list[0]['updated_at']),
@@ -100,14 +100,14 @@ void main() {
           parentSlug: list[0]['parent_slug'],
           parentUsername: list[0]['parent_username'],
         ),
-        TopicEntity(
+        ContentEntity(
           id: list[1]['id'],
           ownerId: list[1]['owner_id'],
           parentId: list[1]['parent_id'],
           slug: list[1]['slug'],
           title: list[1]['title'],
           body: list[1]['body'],
-          status: TopicStatus.published,
+          status: ContentStatus.published,
           sourceUrl: list[1]['source_url'],
           createdAt: DateTime.parse(list[1]['created_at']),
           updatedAt: DateTime.parse(list[1]['updated_at']),

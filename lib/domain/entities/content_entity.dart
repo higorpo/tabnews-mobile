@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 
 import 'entities.dart';
 
-class TopicEntity extends Equatable {
+class ContentEntity extends Equatable {
   final String id;
   final String ownerId;
   final String? parentId;
   final String slug;
   final String title;
   final String body;
-  final TopicStatus status;
+  final ContentStatus status;
   final String? sourceUrl;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -19,7 +19,7 @@ class TopicEntity extends Equatable {
   final String? parentSlug;
   final String? parentUsername;
 
-  const TopicEntity({
+  const ContentEntity({
     required this.id,
     required this.ownerId,
     this.parentId,

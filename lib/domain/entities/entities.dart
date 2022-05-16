@@ -1,2 +1,2 @@
-export 'topic_entity.dart';
-export 'topic_status.dart';
+export 'content_entity.dart';
+export 'content_status.dart';

@@ -1,1 +1,1 @@
-export 'remote_topic_model.dart';
+export 'remote_content_model.dart';
