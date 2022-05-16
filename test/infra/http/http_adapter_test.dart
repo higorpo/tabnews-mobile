@@ -26,7 +26,13 @@ class HttpAdapter {
         'accept': 'application/json',
       });
 
-    final response = await client.get(Uri.parse(url), headers: defaultHeaders);
+    var response = Response('', 500);
+
+    try {
+      response = await client.get(Uri.parse(url), headers: defaultHeaders);
+    } catch (error) {
+      throw HttpError.serverError;
+    }
 
     return _handleResponse(response);
   }
@@ -60,6 +66,10 @@ void main() {
 
   void mockResponse(int statusCode, {String body = '{"any_key":"any_value"}'}) {
     mockRequest().thenAnswer((_) async => Response(body, statusCode));
+  }
+
+  void mockError() {
+    mockRequest().thenThrow(Exception());
   }
 
   setUp(() {
@@ -156,6 +166,14 @@ void main() {
 
   test('Should return ServerError if get returns 500', () async {
     mockResponse(500);
+
+    final future = sut.request(url: uri.toString(), method: 'get');
+
+    expect(future, throwsA(HttpError.serverError));
+  });
+
+  test('Should return ServerError if get throws', () async {
+    mockError();
 
     final future = sut.request(url: uri.toString(), method: 'get');
 
