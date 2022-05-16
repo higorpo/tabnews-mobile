@@ -8,6 +8,8 @@ import 'package:test/test.dart';
 
 import 'http_adapter_test.mocks.dart';
 
+enum HttpError { badRequest, unauthorized, forbidden, notFound, serverError }
+
 class HttpAdapter {
   final Client client;
 
@@ -26,7 +28,25 @@ class HttpAdapter {
 
     final response = await client.get(Uri.parse(url), headers: defaultHeaders);
 
-    return response.body.isNotEmpty ? jsonDecode(response.body) : null;
+    return _handleResponse(response);
+  }
+
+  dynamic _handleResponse(Response response) {
+    if (response.statusCode == 200) {
+      return response.body.isNotEmpty ? jsonDecode(response.body) : null;
+    } else if (response.statusCode == 204) {
+      return null;
+    } else if (response.statusCode == 400) {
+      throw HttpError.badRequest;
+    } else if (response.statusCode == 401) {
+      throw HttpError.unauthorized;
+    } else if (response.statusCode == 403) {
+      throw HttpError.forbidden;
+    } else if (response.statusCode == 404) {
+      throw HttpError.notFound;
+    } else {
+      throw HttpError.serverError;
+    }
   }
 }
 
@@ -80,6 +100,14 @@ void main() {
 
   test('Should return null if get returns 204', () async {
     mockResponse(204, body: '');
+
+    final response = await sut.request(url: uri.toString(), method: 'get');
+
+    expect(response, null);
+  });
+
+  test('Should return null if get returns 204 with data', () async {
+    mockResponse(204);
 
     final response = await sut.request(url: uri.toString(), method: 'get');
 
