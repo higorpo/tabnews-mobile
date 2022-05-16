@@ -77,4 +77,12 @@ void main() {
 
     expect(response, null);
   });
+
+  test('Should return null if get returns 204', () async {
+    mockResponse(204, body: '');
+
+    final response = await sut.request(url: uri.toString(), method: 'get');
+
+    expect(response, null);
+  });
 }
