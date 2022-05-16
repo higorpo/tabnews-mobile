@@ -5,7 +5,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:tab_news/data/http/http.dart';
-import 'package:tab_news/domain/usecases/entities/entities.dart';
+import 'package:tab_news/domain/domain.dart';
 
 import 'load_topics_test.mocks.dart';
 
@@ -16,8 +16,12 @@ class HttpLoadTopics {
   HttpLoadTopics({required this.url, required this.httpClient});
 
   Future<List<TopicEntity>> loadAllTopics() async {
-    final response = await httpClient.request(url: url, method: 'get');
-    return response.map<TopicEntity>((map) => RemoteTopicModel.fromJson(map).toEntity()).toList();
+    try {
+      final response = await httpClient.request(url: url, method: 'get');
+      return response.map<TopicEntity>((map) => RemoteTopicModel.fromJson(map).toEntity()).toList();
+    } on HttpError catch (error) {
+      throw error == HttpError.forbidden ? DomainError.accessDenied : DomainError.unexpected;
+    }
   }
 }
 
@@ -128,5 +132,15 @@ void main() {
         ),
       ],
     );
+  });
+
+  test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {
+    mockHttpData([
+      {'invalid_key': 'invalid_data'}
+    ]);
+
+    final future = sut.loadAllTopics();
+
+    expect(future, throwsA(DomainError.unexpected));
   });
 }
