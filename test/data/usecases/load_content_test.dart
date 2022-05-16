@@ -4,6 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:tab_news/data/data.dart';
+import 'package:tab_news/domain/domain.dart';
 
 import 'load_contents_test.mocks.dart';
 
@@ -13,8 +14,9 @@ class HttpLoadContent {
 
   HttpLoadContent({required this.httpClient, required this.url});
 
-  Future<void> loadContent(String contentId) async {
-    await httpClient.request(url: url, method: 'get');
+  Future<ContentEntity?> loadContent(String contentId) async {
+    final response = await httpClient.request(url: url, method: 'get');
+    return RemoteContentModel.fromJson(response).toEntity();
   }
 }
 
@@ -23,7 +25,7 @@ void main() {
   late HttpLoadContent sut;
   late MockHttpClient httpClient;
   late String url;
-  late Map list;
+  late Map contentData;
 
   Map mockValidData() => {
         'id': faker.guid.guid(),
@@ -46,7 +48,7 @@ void main() {
   PostExpectation mockRequest() => when(httpClient.request(url: anyNamed('url'), method: anyNamed('method')));
 
   void mockHttpData(Map data) {
-    list = data;
+    contentData = data;
     mockRequest().thenAnswer((_) async => data);
   }
 
@@ -62,5 +64,30 @@ void main() {
     sut.loadContent(faker.guid.guid());
 
     verify(httpClient.request(url: url, method: 'get')).called(1);
+  });
+
+  test('Should return a content on 200', () async {
+    final content = await sut.loadContent(faker.guid.guid());
+
+    expect(
+      content,
+      ContentEntity(
+        id: contentData['id'],
+        ownerId: contentData['owner_id'],
+        parentId: contentData['parent_id'],
+        slug: contentData['slug'],
+        title: contentData['title'],
+        body: contentData['body'],
+        status: ContentStatus.published,
+        sourceUrl: contentData['source_url'],
+        createdAt: DateTime.parse(contentData['created_at']),
+        updatedAt: DateTime.parse(contentData['updated_at']),
+        publishedAt: DateTime.parse(contentData['published_at']),
+        username: contentData['username'],
+        parentTitle: contentData['parent_title'],
+        parentSlug: contentData['parent_slug'],
+        parentUsername: contentData['parent_username'],
+      ),
+    );
   });
 }

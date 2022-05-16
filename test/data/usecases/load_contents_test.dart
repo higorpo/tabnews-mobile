@@ -78,10 +78,10 @@ void main() {
   });
 
   test('Should return topics on 200', () async {
-    final topics = await sut.loadContents();
+    final contents = await sut.loadContents();
 
     expect(
-      topics,
+      contents,
       [
         ContentEntity(
           id: list[0]['id'],
