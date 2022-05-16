@@ -153,4 +153,12 @@ void main() {
 
     expect(future, throwsA(HttpError.notFound));
   });
+
+  test('Should return ServerError if get returns 500', () async {
+    mockResponse(500);
+
+    final future = sut.request(url: uri.toString(), method: 'get');
+
+    expect(future, throwsA(HttpError.serverError));
+  });
 }
