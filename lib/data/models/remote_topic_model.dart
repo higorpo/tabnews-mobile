@@ -1,5 +1,5 @@
-import 'package:tab_news/data/http/http.dart';
-import 'package:tab_news/domain/domain.dart';
+import '../../domain/domain.dart';
+import '../http/http.dart';
 
 class RemoteTopicModel {
   final String id;

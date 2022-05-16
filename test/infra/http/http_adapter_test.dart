@@ -6,8 +6,8 @@ import 'package:test/test.dart';
 
 import 'http_adapter_test.mocks.dart';
 
-import 'package:tab_news/data/http/http.dart';
-import 'package:tab_news/infra/http/http_adapter.dart';
+import 'package:tab_news/data/data.dart';
+import 'package:tab_news/infra/infra.dart';
 
 @GenerateMocks([Client])
 void main() {

@@ -1,10 +1,9 @@
 import 'package:faker/faker.dart';
-import 'package:tab_news/data/models/models.dart';
 import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:tab_news/data/http/http.dart';
+import 'package:tab_news/data/data.dart';
 import 'package:tab_news/domain/domain.dart';
 
 import 'load_topics_test.mocks.dart';
