@@ -1,0 +1,4 @@
+enum TopicStatus {
+  draft,
+  published,
+}

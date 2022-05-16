@@ -1,9 +1,11 @@
 import 'package:faker/faker.dart';
+import 'package:tab_news/data/models/models.dart';
 import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:tab_news/data/http/http.dart';
+import 'package:tab_news/domain/usecases/entities/entities.dart';
 
 import 'load_topics_test.mocks.dart';
 
@@ -13,8 +15,9 @@ class HttpLoadTopics {
 
   HttpLoadTopics({required this.url, required this.httpClient});
 
-  Future<void> loadAllTopics() async {
-    await httpClient.request(url: url, method: 'get');
+  Future<List<TopicEntity>> loadAllTopics() async {
+    final response = await httpClient.request(url: url, method: 'get');
+    return response.map<TopicEntity>((map) => RemoteTopicModel.fromJson(map).toEntity()).toList();
   }
 }
 
@@ -81,5 +84,49 @@ void main() {
     sut.loadAllTopics();
 
     verify(httpClient.request(url: url, method: 'get')).called(1);
+  });
+
+  test('Should return topics on 200', () async {
+    final topics = await sut.loadAllTopics();
+
+    expect(
+      topics,
+      [
+        TopicEntity(
+          id: list[0]['id'],
+          ownerId: list[0]['owner_id'],
+          parentId: list[0]['parent_id'],
+          slug: list[0]['slug'],
+          title: list[0]['title'],
+          body: list[0]['body'],
+          status: TopicStatus.published,
+          sourceUrl: list[0]['source_url'],
+          createdAt: DateTime.parse(list[0]['created_at']),
+          updatedAt: DateTime.parse(list[0]['updated_at']),
+          publishedAt: DateTime.parse(list[0]['published_at']),
+          username: list[0]['username'],
+          parentTitle: list[0]['parent_title'],
+          parentSlug: list[0]['parent_slug'],
+          parentUsername: list[0]['parent_username'],
+        ),
+        TopicEntity(
+          id: list[1]['id'],
+          ownerId: list[1]['owner_id'],
+          parentId: list[1]['parent_id'],
+          slug: list[1]['slug'],
+          title: list[1]['title'],
+          body: list[1]['body'],
+          status: TopicStatus.published,
+          sourceUrl: list[1]['source_url'],
+          createdAt: DateTime.parse(list[1]['created_at']),
+          updatedAt: DateTime.parse(list[1]['updated_at']),
+          publishedAt: DateTime.parse(list[1]['published_at']),
+          username: list[1]['username'],
+          parentTitle: list[1]['parent_title'],
+          parentSlug: list[1]['parent_slug'],
+          parentUsername: list[1]['parent_username'],
+        ),
+      ],
+    );
   });
 }
