@@ -77,7 +77,7 @@ void main() {
     verify(httpClient.request(url: url, method: 'get')).called(1);
   });
 
-  test('Should return topics on 200', () async {
+  test('Should return contents on 200', () async {
     final contents = await sut.loadContents();
 
     expect(
