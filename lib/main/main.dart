@@ -23,6 +23,7 @@ class TabNews extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: makeFeedPage),
+        GetPage(name: '/content', page: makeContentPage),
       ],
     );
   }

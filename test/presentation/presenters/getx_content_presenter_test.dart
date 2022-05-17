@@ -1,60 +1,13 @@
 import 'package:faker/faker.dart';
-import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tab_news/ui/ui.dart';
 import 'package:test/test.dart';
 
 import 'package:tab_news/domain/domain.dart';
+import 'package:tab_news/presentation/presentation.dart';
 
 import 'getx_content_presenter_test.mocks.dart';
-
-class GetxContentPresenter {
-  final LoadContent loadContent;
-  final LoadContentChildren loadContentChildren;
-
-  final _isLoadingContent = true.obs;
-  final _isLoadingChildren = true.obs;
-  final _content = Rx<ContentViewModel?>(null);
-  final _children = Rx<List<ContentViewModel>>([]);
-
-  Stream<bool> get isLoadingContentStream => _isLoadingContent.stream;
-  Stream<bool> get isLoadingChildrenStream => _isLoadingChildren.stream;
-  Stream<ContentViewModel?> get contentStream => _content.stream;
-  Stream<List<ContentViewModel>> get childrenStream => _children.stream;
-
-  GetxContentPresenter({required this.loadContent, required this.loadContentChildren});
-
-  Future<void> loadData(String contentId) async {
-    _isLoadingContent.value = true;
-    _isLoadingChildren.value = true;
-
-    try {
-      final content = await loadContent.fetch(contentId);
-      _content.value = ContentViewModel(
-        id: content.id,
-        title: content.title,
-        body: content.body,
-      );
-
-      _isLoadingContent.value = false;
-
-      final children = await loadContentChildren.fetch(contentId);
-      _children.value = children
-          .map((content) => ContentViewModel(
-                id: content.id,
-                body: content.body,
-              ))
-          .toList();
-
-      _isLoadingChildren.value = false;
-    } on DomainError {
-      _content.subject.addError(UIError.unexpected.description);
-      _isLoadingContent.value = false;
-      _isLoadingChildren.value = false;
-    }
-  }
-}
 
 @GenerateMocks([LoadContent, LoadContentChildren])
 void main() {
