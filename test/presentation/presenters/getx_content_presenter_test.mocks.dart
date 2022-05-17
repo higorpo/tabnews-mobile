@@ -2,11 +2,12 @@
 // in tab_news/test/presentation/presenters/getx_content_presenter_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:tab_news/domain/entities/entities.dart' as _i4;
-import 'package:tab_news/domain/usecases/load_content.dart' as _i2;
+import 'package:tab_news/domain/entities/entities.dart' as _i2;
+import 'package:tab_news/domain/usecases/load_content.dart' as _i3;
+import 'package:tab_news/domain/usecases/load_content_children.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -18,17 +19,36 @@ import 'package:tab_news/domain/usecases/load_content.dart' as _i2;
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
+class _FakeContentEntity_0 extends _i1.Fake implements _i2.ContentEntity {}
+
 /// A class which mocks [LoadContent].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLoadContent extends _i1.Mock implements _i2.LoadContent {
+class MockLoadContent extends _i1.Mock implements _i3.LoadContent {
   MockLoadContent() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<_i4.ContentEntity?> fetch(String? contentId) =>
+  _i4.Future<_i2.ContentEntity> fetch(String? contentId) => (super.noSuchMethod(
+          Invocation.method(#fetch, [contentId]),
+          returnValue: Future<_i2.ContentEntity>.value(_FakeContentEntity_0()))
+      as _i4.Future<_i2.ContentEntity>);
+}
+
+/// A class which mocks [LoadContentChildren].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockLoadContentChildren extends _i1.Mock
+    implements _i5.LoadContentChildren {
+  MockLoadContentChildren() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<List<_i2.ContentChildEntity>> fetch(String? contentId) =>
       (super.noSuchMethod(Invocation.method(#fetch, [contentId]),
-              returnValue: Future<_i4.ContentEntity?>.value())
-          as _i3.Future<_i4.ContentEntity?>);
+              returnValue: Future<List<_i2.ContentChildEntity>>.value(
+                  <_i2.ContentChildEntity>[]))
+          as _i4.Future<List<_i2.ContentChildEntity>>);
 }

@@ -8,7 +8,7 @@ class HttpLoadContent implements LoadContent {
   HttpLoadContent({required this.httpClient, required this.url});
 
   @override
-  Future<ContentEntity?> fetch(String contentId) async {
+  Future<ContentEntity> fetch(String contentId) async {
     try {
       final response = await httpClient.request(url: url, method: 'get');
       return RemoteContentModel.fromJson(response).toEntity();
