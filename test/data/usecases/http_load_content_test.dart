@@ -63,7 +63,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Should use correct url', () async {
+  test('Should parse slug on url', () async {
     const url = 'http://minhaurl.com/:slug';
     final sut = HttpLoadContent(
       url: url,
