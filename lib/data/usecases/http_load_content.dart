@@ -14,9 +14,9 @@ class HttpLoadContent implements LoadContent {
         throw DomainError.unexpected;
       }
 
-      url.replaceAll(':slug', slugId);
+      String urlWithSlug = url.replaceAll(':slug', slugId);
 
-      final response = await httpClient.request(url: url, method: 'get');
+      final response = await httpClient.request(url: urlWithSlug, method: 'get');
       return RemoteContentModel.fromJson(response).toEntity();
     } on HttpError catch (error) {
       throw error == HttpError.forbidden ? DomainError.accessDenied : DomainError.unexpected;
