@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:faker/faker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -9,22 +7,6 @@ import 'package:tab_news/data/data.dart';
 import 'package:tab_news/domain/domain.dart';
 
 import 'http_load_content_children_test.mocks.dart';
-
-class HttpLoadContentChildren {
-  final String url;
-  final MockHttpClient httpClient;
-
-  HttpLoadContentChildren({required this.url, required this.httpClient});
-
-  Future<List<ContentChildEntity>> loadContentChildren(String contentId) async {
-    try {
-      final response = await httpClient.request(url: url, method: 'get');
-      return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();
-    } on HttpError catch (error) {
-      throw error == HttpError.forbidden ? DomainError.accessDenied : DomainError.unexpected;
-    }
-  }
-}
 
 @GenerateMocks([HttpClient])
 void main() {
