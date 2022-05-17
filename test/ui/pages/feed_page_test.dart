@@ -78,4 +78,15 @@ void main() {
 
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
+
+  testWidgets('Should present error if contentsStream fails', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    contentsController.addError(UIError.unexpected.description);
+    await tester.pump();
+
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
+    expect(find.text('Recarregar'), findsOneWidget);
+    expect(find.text('Content 1'), findsNothing);
+  });
 }
