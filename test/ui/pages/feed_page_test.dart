@@ -68,6 +68,15 @@ void main() {
     expect(find.byType(IconButton), findsOneWidget);
   });
 
+  testWidgets('Should call LoadContents when refresh button is pressed', (tester) async {
+    await loadPage(tester);
+
+    final button = find.byType(IconButton);
+    await tester.tap(button);
+
+    verify(presenter.loadData()).called(2);
+  });
+
   testWidgets('Should handle loading correctly', (WidgetTester tester) async {
     await loadPage(tester);
 
