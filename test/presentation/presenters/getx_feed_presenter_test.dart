@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 import 'package:tab_news/domain/domain.dart';
 import 'package:tab_news/ui/ui.dart';
-import 'package:tab_news/utils/utils.dart';
 
 import 'getx_feed_presenter_test.mocks.dart';
 
