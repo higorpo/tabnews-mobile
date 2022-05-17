@@ -11,7 +11,7 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Feed'),
+        title: Image.asset('lib/ui/assets/logo.png'),
       ),
       body: Container(),
     );
