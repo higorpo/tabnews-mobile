@@ -17,8 +17,12 @@ class HttpLoadContentChildren {
   HttpLoadContentChildren({required this.url, required this.httpClient});
 
   Future<List<ContentChildEntity>> loadContentChildren(String contentId) async {
-    final response = await httpClient.request(url: url, method: 'get');
-    return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();
+    try {
+      final response = await httpClient.request(url: url, method: 'get');
+      return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();
+    } on HttpError catch (error) {
+      throw error == HttpError.forbidden ? DomainError.accessDenied : DomainError.unexpected;
+    }
   }
 }
 
@@ -164,5 +168,15 @@ void main() {
         ),
       ],
     );
+  });
+
+  test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {
+    mockHttpData([
+      {'invalid_key': 'invalid_data'}
+    ]);
+
+    final future = sut.loadContentChildren(faker.guid.guid());
+
+    expect(future, throwsA(DomainError.unexpected));
   });
 }
