@@ -2,50 +2,17 @@ import 'package:faker/faker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:get/get.dart';
 
 import 'package:tab_news/domain/domain.dart';
+import 'package:tab_news/presentation/presentation.dart';
 import 'package:tab_news/ui/ui.dart';
 
 import 'getx_feed_presenter_test.mocks.dart';
-
-class GetxFeedPresenter {
-  final LoadContents loadContents;
-
-  final _isLoading = true.obs;
-  final _contents = Rx<List<FeedContentViewModel>>([]);
-
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  Stream<List<FeedContentViewModel>> get contentsStream => _contents.stream;
-
-  GetxFeedPresenter({required this.loadContents});
-
-  Future<void> loadData() async {
-    _isLoading.value = true;
-
-    try {
-      final contents = await loadContents.loadContents();
-      _contents.value = contents
-          .map((content) => FeedContentViewModel(
-                id: content.id,
-                title: content.title,
-                username: content.username,
-                createdAt: content.createdAt.timeAgo(),
-              ))
-          .toList();
-    } on DomainError {
-      _contents.subject.addError(UIError.unexpected.description);
-    } finally {
-      _isLoading.value = false;
-    }
-  }
-}
 
 @GenerateMocks([LoadContents])
 void main() {
   late MockLoadContents loadContents;
   late GetxFeedPresenter sut;
-  late List<ContentEntity> contents;
 
   List<ContentEntity> mockValidData() => [
         ContentEntity(
@@ -79,7 +46,6 @@ void main() {
   PostExpectation mockLoadContentsCall() => when(loadContents.loadContents());
 
   void mockLoadSurveys(List<ContentEntity> data) {
-    contents = data;
     mockLoadContentsCall().thenAnswer((_) async => data);
   }
 
