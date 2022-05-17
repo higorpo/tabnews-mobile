@@ -86,7 +86,6 @@ void main() {
         ContentEntity(
           id: list[0]['id'],
           ownerId: list[0]['owner_id'],
-          parentId: list[0]['parent_id'],
           slug: list[0]['slug'],
           title: list[0]['title'],
           body: list[0]['body'],
@@ -96,14 +95,10 @@ void main() {
           updatedAt: DateTime.parse(list[0]['updated_at']),
           publishedAt: DateTime.parse(list[0]['published_at']),
           username: list[0]['username'],
-          parentTitle: list[0]['parent_title'],
-          parentSlug: list[0]['parent_slug'],
-          parentUsername: list[0]['parent_username'],
         ),
         ContentEntity(
           id: list[1]['id'],
           ownerId: list[1]['owner_id'],
-          parentId: list[1]['parent_id'],
           slug: list[1]['slug'],
           title: list[1]['title'],
           body: list[1]['body'],
@@ -113,9 +108,6 @@ void main() {
           updatedAt: DateTime.parse(list[1]['updated_at']),
           publishedAt: DateTime.parse(list[1]['published_at']),
           username: list[1]['username'],
-          parentTitle: list[1]['parent_title'],
-          parentSlug: list[1]['parent_slug'],
-          parentUsername: list[1]['parent_username'],
         ),
       ],
     );

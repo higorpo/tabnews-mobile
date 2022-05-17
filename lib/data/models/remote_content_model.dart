@@ -4,7 +4,6 @@ import '../http/http.dart';
 class RemoteContentModel {
   final String id;
   final String ownerId;
-  final String? parentId;
   final String slug;
   final String title;
   final String body;
@@ -14,14 +13,10 @@ class RemoteContentModel {
   final String updatedAt;
   final String publishedAt;
   final String username;
-  final String? parentTitle;
-  final String? parentSlug;
-  final String? parentUsername;
 
   RemoteContentModel({
     required this.id,
     required this.ownerId,
-    required this.parentId,
     required this.slug,
     required this.title,
     required this.body,
@@ -31,16 +26,12 @@ class RemoteContentModel {
     required this.updatedAt,
     required this.publishedAt,
     required this.username,
-    required this.parentTitle,
-    required this.parentSlug,
-    required this.parentUsername,
   });
 
   factory RemoteContentModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       'id',
       'owner_id',
-      'parent_id',
       'slug',
       'title',
       'body',
@@ -50,9 +41,6 @@ class RemoteContentModel {
       'updated_at',
       'published_at',
       'username',
-      'parent_title',
-      'parent_slug',
-      'parent_username'
     ])) {
       throw HttpError.invalidData;
     }
@@ -60,7 +48,6 @@ class RemoteContentModel {
     return RemoteContentModel(
       id: json['id'],
       ownerId: json['owner_id'],
-      parentId: json['parent_id'],
       slug: json['slug'],
       title: json['title'],
       body: json['body'],
@@ -70,9 +57,6 @@ class RemoteContentModel {
       updatedAt: json['updated_at'],
       publishedAt: json['published_at'],
       username: json['username'],
-      parentTitle: json['parent_title'],
-      parentSlug: json['parent_slug'],
-      parentUsername: json['parent_username'],
     );
   }
 
@@ -80,7 +64,6 @@ class RemoteContentModel {
     return ContentEntity(
       id: id,
       ownerId: ownerId,
-      parentId: parentId,
       slug: slug,
       title: title,
       body: body,
@@ -90,9 +73,6 @@ class RemoteContentModel {
       updatedAt: DateTime.parse(updatedAt),
       publishedAt: DateTime.parse(publishedAt),
       username: username,
-      parentTitle: parentTitle,
-      parentSlug: parentSlug,
-      parentUsername: parentUsername,
     );
   }
 }

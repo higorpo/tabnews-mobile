@@ -5,7 +5,6 @@ import 'entities.dart';
 class ContentEntity extends Equatable {
   final String id;
   final String ownerId;
-  final String? parentId;
   final String slug;
   final String title;
   final String body;
@@ -15,14 +14,10 @@ class ContentEntity extends Equatable {
   final DateTime updatedAt;
   final DateTime publishedAt;
   final String username;
-  final String? parentTitle;
-  final String? parentSlug;
-  final String? parentUsername;
 
   const ContentEntity({
     required this.id,
     required this.ownerId,
-    this.parentId,
     required this.slug,
     required this.title,
     required this.body,
@@ -32,9 +27,6 @@ class ContentEntity extends Equatable {
     required this.updatedAt,
     required this.publishedAt,
     required this.username,
-    this.parentTitle,
-    this.parentSlug,
-    this.parentUsername,
   });
 
   @override

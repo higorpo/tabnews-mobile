@@ -66,7 +66,6 @@ void main() {
       ContentEntity(
         id: contentData['id'],
         ownerId: contentData['owner_id'],
-        parentId: contentData['parent_id'],
         slug: contentData['slug'],
         title: contentData['title'],
         body: contentData['body'],
@@ -76,9 +75,6 @@ void main() {
         updatedAt: DateTime.parse(contentData['updated_at']),
         publishedAt: DateTime.parse(contentData['published_at']),
         username: contentData['username'],
-        parentTitle: contentData['parent_title'],
-        parentSlug: contentData['parent_slug'],
-        parentUsername: contentData['parent_username'],
       ),
     );
   });
