@@ -11,6 +11,10 @@ class HttpLoadContentChildren implements LoadContentChildren {
   @override
   Future<List<ContentChildEntity>> fetch(String slugId) async {
     try {
+      if (url.isEmpty || !url.contains(':slug')) {
+        throw DomainError.unexpected;
+      }
+
       final response = await httpClient.request(url: url, method: 'get');
       return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();
     } on HttpError catch (error) {
