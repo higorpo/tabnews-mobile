@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:faker/faker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -14,8 +16,9 @@ class HttpLoadContentChildren {
 
   HttpLoadContentChildren({required this.url, required this.httpClient});
 
-  Future<void> loadContentChildren(String contentId) async {
-    await httpClient.request(url: url, method: 'get');
+  Future<List<ContentChildEntity>> loadContentChildren(String contentId) async {
+    final response = await httpClient.request(url: url, method: 'get');
+    return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();
   }
 }
 
@@ -31,7 +34,6 @@ void main() {
         'owner_id': faker.randomGenerator.string(50),
         'parent_id': faker.randomGenerator.string(50),
         'slug': faker.randomGenerator.string(20),
-        'title': null,
         'body': faker.randomGenerator.string(250),
         'status': 'published',
         'source_url': null,
@@ -70,5 +72,97 @@ void main() {
     sut.loadContentChildren(faker.guid.guid());
 
     verify(httpClient.request(url: url, method: 'get')).called(1);
+  });
+
+  test('Should return children on 200', () async {
+    final contents = await sut.loadContentChildren(faker.guid.guid());
+
+    expect(
+      contents,
+      [
+        ContentChildEntity(
+          id: list[0]['id'],
+          ownerId: list[0]['owner_id'],
+          parentId: list[0]['parent_id'],
+          slug: list[0]['slug'],
+          body: list[0]['body'],
+          status: ContentStatus.published,
+          sourceUrl: list[0]['source_url'],
+          createdAt: DateTime.parse(list[0]['created_at']),
+          updatedAt: DateTime.parse(list[0]['updated_at']),
+          publishedAt: DateTime.parse(list[0]['published_at']),
+          username: list[0]['username'],
+          parentTitle: list[0]['parent_title'],
+          parentSlug: list[0]['parent_slug'],
+          parentUsername: list[0]['parent_username'],
+        ),
+        ContentChildEntity(
+          id: list[1]['id'],
+          ownerId: list[1]['owner_id'],
+          parentId: list[1]['parent_id'],
+          slug: list[1]['slug'],
+          body: list[1]['body'],
+          status: ContentStatus.published,
+          sourceUrl: list[1]['source_url'],
+          createdAt: DateTime.parse(list[1]['created_at']),
+          updatedAt: DateTime.parse(list[1]['updated_at']),
+          publishedAt: DateTime.parse(list[1]['published_at']),
+          username: list[1]['username'],
+          parentTitle: list[1]['parent_title'],
+          parentSlug: list[1]['parent_slug'],
+          parentUsername: list[1]['parent_username'],
+          children: [
+            ContentChildEntity(
+              id: list[1]['children'][0]['id'],
+              ownerId: list[1]['children'][0]['owner_id'],
+              parentId: list[1]['children'][0]['parent_id'],
+              slug: list[1]['children'][0]['slug'],
+              body: list[1]['children'][0]['body'],
+              status: ContentStatus.published,
+              sourceUrl: list[1]['children'][0]['source_url'],
+              createdAt: DateTime.parse(list[1]['children'][0]['created_at']),
+              updatedAt: DateTime.parse(list[1]['children'][0]['updated_at']),
+              publishedAt: DateTime.parse(list[1]['children'][0]['published_at']),
+              username: list[1]['children'][0]['username'],
+              parentTitle: list[1]['children'][0]['parent_title'],
+              parentSlug: list[1]['children'][0]['parent_slug'],
+              parentUsername: list[1]['children'][0]['parent_username'],
+            ),
+            ContentChildEntity(
+              id: list[1]['children'][1]['id'],
+              ownerId: list[1]['children'][1]['owner_id'],
+              parentId: list[1]['children'][1]['parent_id'],
+              slug: list[1]['children'][1]['slug'],
+              body: list[1]['children'][1]['body'],
+              status: ContentStatus.published,
+              sourceUrl: list[1]['children'][1]['source_url'],
+              createdAt: DateTime.parse(list[1]['children'][1]['created_at']),
+              updatedAt: DateTime.parse(list[1]['children'][1]['updated_at']),
+              publishedAt: DateTime.parse(list[1]['children'][1]['published_at']),
+              username: list[1]['children'][1]['username'],
+              parentTitle: list[1]['children'][1]['parent_title'],
+              parentSlug: list[1]['children'][1]['parent_slug'],
+              parentUsername: list[1]['children'][1]['parent_username'],
+            ),
+          ],
+        ),
+        ContentChildEntity(
+          id: list[2]['id'],
+          ownerId: list[2]['owner_id'],
+          parentId: list[2]['parent_id'],
+          slug: list[2]['slug'],
+          body: list[2]['body'],
+          status: ContentStatus.published,
+          sourceUrl: list[2]['source_url'],
+          createdAt: DateTime.parse(list[2]['created_at']),
+          updatedAt: DateTime.parse(list[2]['updated_at']),
+          publishedAt: DateTime.parse(list[2]['published_at']),
+          username: list[2]['username'],
+          parentTitle: list[2]['parent_title'],
+          parentSlug: list[2]['parent_slug'],
+          parentUsername: list[2]['parent_username'],
+        ),
+      ],
+    );
   });
 }
