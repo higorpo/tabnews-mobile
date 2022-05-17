@@ -3,17 +3,21 @@ import 'package:get/get.dart';
 import '../../domain/domain.dart';
 import '../../ui/ui.dart';
 
-class GetxFeedPresenter {
+class GetxFeedPresenter implements FeedPresenter {
   final LoadContents loadContents;
 
   final _isLoading = true.obs;
   final _contents = Rx<List<FeedContentViewModel>>([]);
 
+  @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
+
+  @override
   Stream<List<FeedContentViewModel>> get contentsStream => _contents.stream;
 
   GetxFeedPresenter({required this.loadContents});
 
+  @override
   Future<void> loadData() async {
     _isLoading.value = true;
 
