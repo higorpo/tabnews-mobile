@@ -2,13 +2,14 @@ import '../../domain/domain.dart';
 
 import '../data.dart';
 
-class HttpLoadContentChildren {
+class HttpLoadContentChildren implements LoadContentChildren {
   final String url;
   final HttpClient httpClient;
 
   HttpLoadContentChildren({required this.url, required this.httpClient});
 
-  Future<List<ContentChildEntity>> loadContentChildren(String contentId) async {
+  @override
+  Future<List<ContentChildEntity>> fetch(String contentId) async {
     try {
       final response = await httpClient.request(url: url, method: 'get');
       return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();

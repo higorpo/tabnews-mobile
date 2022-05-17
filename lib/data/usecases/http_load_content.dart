@@ -1,13 +1,14 @@
 import '../../domain/domain.dart';
 import '../data.dart';
 
-class HttpLoadContent {
+class HttpLoadContent implements LoadContent {
   final HttpClient httpClient;
   final String url;
 
   HttpLoadContent({required this.httpClient, required this.url});
 
-  Future<ContentEntity?> loadContent(String contentId) async {
+  @override
+  Future<ContentEntity?> fetch(String contentId) async {
     try {
       final response = await httpClient.request(url: url, method: 'get');
       return RemoteContentModel.fromJson(response).toEntity();

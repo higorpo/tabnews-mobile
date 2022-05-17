@@ -43,7 +43,7 @@ void main() {
         ),
       ];
 
-  PostExpectation mockLoadContentsCall() => when(loadContents.loadContents());
+  PostExpectation mockLoadContentsCall() => when(loadContents.fetch());
 
   void mockLoadSurveys(List<ContentEntity> data) {
     mockLoadContentsCall().thenAnswer((_) async => data);
@@ -61,7 +61,7 @@ void main() {
   test('Should call LoadContents on loadData', () async {
     await sut.loadData();
 
-    verify(loadContents.loadContents()).called(1);
+    verify(loadContents.fetch()).called(1);
   });
 
   test('Should emit correct events on success', () async {

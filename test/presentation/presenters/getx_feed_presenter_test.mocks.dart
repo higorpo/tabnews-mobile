@@ -27,8 +27,8 @@ class MockLoadContents extends _i1.Mock implements _i2.LoadContents {
   }
 
   @override
-  _i3.Future<List<_i4.ContentEntity>> loadContents() =>
-      (super.noSuchMethod(Invocation.method(#loadContents, []),
+  _i3.Future<List<_i4.ContentEntity>> fetch() =>
+      (super.noSuchMethod(Invocation.method(#fetch, []),
               returnValue:
                   Future<List<_i4.ContentEntity>>.value(<_i4.ContentEntity>[]))
           as _i3.Future<List<_i4.ContentEntity>>);

@@ -22,7 +22,7 @@ class GetxFeedPresenter implements FeedPresenter {
     _isLoading.value = true;
 
     try {
-      final contents = await loadContents.loadContents();
+      final contents = await loadContents.fetch();
       _contents.value = contents
           .map((content) => FeedContentViewModel(
                 id: content.id,

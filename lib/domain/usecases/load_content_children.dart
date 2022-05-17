@@ -1,5 +1,5 @@
 import '../entities/entities.dart';
 
 abstract class LoadContentChildren {
-  Future<List<ContentEntity>> loadContentChildren(String contentId);
+  Future<List<ContentChildEntity>> fetch(String contentId);
 }

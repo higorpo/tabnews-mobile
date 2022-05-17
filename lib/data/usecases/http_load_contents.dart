@@ -8,7 +8,7 @@ class HttpLoadContents implements LoadContents {
   HttpLoadContents({required this.url, required this.httpClient});
 
   @override
-  Future<List<ContentEntity>> loadContents() async {
+  Future<List<ContentEntity>> fetch() async {
     try {
       final response = await httpClient.request(url: url, method: 'get');
       return response.map<ContentEntity>((map) => RemoteContentModel.fromJson(map).toEntity()).toList();

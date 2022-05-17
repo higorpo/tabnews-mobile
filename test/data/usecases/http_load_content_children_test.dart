@@ -59,13 +59,13 @@ void main() {
   });
 
   test('Should call HttpClient with correct values', () async {
-    sut.loadContentChildren(faker.guid.guid());
+    sut.fetch(faker.guid.guid());
 
     verify(httpClient.request(url: url, method: 'get')).called(1);
   });
 
   test('Should return children on 200', () async {
-    final contents = await sut.loadContentChildren(faker.guid.guid());
+    final contents = await sut.fetch(faker.guid.guid());
 
     expect(
       contents,
@@ -161,7 +161,7 @@ void main() {
       {'invalid_key': 'invalid_data'}
     ]);
 
-    final future = sut.loadContentChildren(faker.guid.guid());
+    final future = sut.fetch(faker.guid.guid());
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -169,7 +169,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 404', () async {
     mockHttpError(HttpError.notFound);
 
-    final future = sut.loadContentChildren(faker.guid.guid());
+    final future = sut.fetch(faker.guid.guid());
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -177,7 +177,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 500', () async {
     mockHttpError(HttpError.serverError);
 
-    final future = sut.loadContentChildren(faker.guid.guid());
+    final future = sut.fetch(faker.guid.guid());
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -185,7 +185,7 @@ void main() {
   test('Should throw AccessDeniedError if HttpClient returns 403', () async {
     mockHttpError(HttpError.forbidden);
 
-    final future = sut.loadContentChildren(faker.guid.guid());
+    final future = sut.fetch(faker.guid.guid());
 
     expect(future, throwsA(DomainError.accessDenied));
   });
