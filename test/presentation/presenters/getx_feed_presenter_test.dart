@@ -23,16 +23,22 @@ class GetxFeedPresenter {
 
   Future<void> loadData() async {
     _isLoading.value = true;
-    final contents = await loadContents.loadContents();
-    _contents.value = contents
-        .map((content) => FeedContentViewModel(
-              id: content.id,
-              title: content.title,
-              username: content.username,
-              createdAt: content.createdAt.timeAgo(),
-            ))
-        .toList();
-    _isLoading.value = false;
+
+    try {
+      final contents = await loadContents.loadContents();
+      _contents.value = contents
+          .map((content) => FeedContentViewModel(
+                id: content.id,
+                title: content.title,
+                username: content.username,
+                createdAt: content.createdAt.timeAgo(),
+              ))
+          .toList();
+    } on DomainError {
+      _contents.subject.addError(UIError.unexpected.description);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 }
 
@@ -78,6 +84,8 @@ void main() {
     mockLoadContentsCall().thenAnswer((_) async => data);
   }
 
+  void mockLoadContentsError() => mockLoadContentsCall().thenThrow(DomainError.unexpected);
+
   setUp(() {
     loadContents = MockLoadContents();
     sut = GetxFeedPresenter(loadContents: loadContents);
@@ -107,6 +115,15 @@ void main() {
             createdAt: '2 dias atrás',
           ),
         ])));
+
+    await sut.loadData();
+  });
+
+  test('Should emit correct events on failure', () async {
+    mockLoadContentsError();
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    sut.contentsStream.listen(null, onError: expectAsync1((error) => expect(error, UIError.unexpected.description)));
 
     await sut.loadData();
   });
