@@ -47,6 +47,11 @@ void main() {
     await tester.pumpWidget(surveysPage);
   }
 
+  List<FeedContentViewModel> makeContents() => [
+        const FeedContentViewModel(id: '1', title: 'Title 1', username: 'Username 1', createdAt: 'Date 1'),
+        const FeedContentViewModel(id: '2', title: 'Title 2', username: 'Username 2', createdAt: 'Date 2'),
+      ];
+
   tearDown(() {
     closeStreams();
   });
@@ -87,6 +92,23 @@ void main() {
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
     expect(find.text('Recarregar'), findsOneWidget);
-    expect(find.text('Content 1'), findsNothing);
+    expect(find.text('Title 1'), findsNothing);
+  });
+
+  testWidgets('Should present list if contentsStream succeeds', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    contentsController.add(makeContents());
+    await tester.pump();
+
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
+    expect(find.text('Recarregar'), findsNothing);
+    expect(find.text('Title 1'), findsWidgets);
+    expect(find.text('Title 2'), findsWidgets);
+    expect(find.text('Username 1'), findsWidgets);
+    expect(find.text('Username 2'), findsWidgets);
+    expect(find.text('Recarregar'), findsNothing);
+    expect(find.text('Date 1'), findsWidgets);
+    expect(find.text('Date 2'), findsWidgets);
   });
 }
