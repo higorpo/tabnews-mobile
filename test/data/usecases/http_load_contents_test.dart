@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 import 'package:tab_news/data/data.dart';
 import 'package:tab_news/domain/domain.dart';
 
-import 'load_contents_test.mocks.dart';
+import 'http_load_contents_test.mocks.dart';
 
 @GenerateMocks([HttpClient])
 void main() {
