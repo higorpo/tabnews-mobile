@@ -38,5 +38,5 @@ class ContentChildEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [id, ownerId, slug, body, status, createdAt, updatedAt, publishedAt, username, children];
 }
