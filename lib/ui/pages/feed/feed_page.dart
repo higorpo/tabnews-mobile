@@ -53,7 +53,12 @@ class FeedPage extends StatelessWidget {
               itemCount: snapshots.item2.data?.length ?? 0,
               itemBuilder: (context, index) {
                 final content = snapshots.item2.data![index];
-                return ContentPreview(title: content.title, username: content.username, createdAt: content.createdAt);
+                return ContentPreview(
+                  title: content.title,
+                  username: content.username,
+                  createdAt: content.createdAt,
+                  onTap: () => presenter.goToContent(content.id),
+                );
               },
             );
           }

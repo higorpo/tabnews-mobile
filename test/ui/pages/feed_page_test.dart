@@ -41,6 +41,7 @@ void main() {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => FeedPage(presenter: presenter)),
+        GetPage(name: '/content', page: () => Container()),
       ],
     );
 
@@ -136,5 +137,17 @@ void main() {
     await tester.tap(find.text('Recarregar'));
 
     verify(presenter.loadData()).called(2);
+  });
+
+  testWidgets('Should call goToContent on item click', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    contentsController.add(makeContents());
+    await tester.pump();
+
+    final item = find.text('Title 1');
+    await tester.tap(item);
+
+    verify(presenter.goToContent('1')).called(1);
   });
 }

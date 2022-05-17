@@ -37,4 +37,9 @@ class GetxFeedPresenter implements FeedPresenter {
       _isLoading.value = false;
     }
   }
+
+  @override
+  void goToContent(String id) {
+    Get.toNamed('/content', arguments: id);
+  }
 }
