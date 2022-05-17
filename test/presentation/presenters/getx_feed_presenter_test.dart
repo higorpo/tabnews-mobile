@@ -45,7 +45,7 @@ void main() {
 
   PostExpectation mockLoadContentsCall() => when(loadContents.fetch());
 
-  void mockLoadSurveys(List<ContentEntity> data) {
+  void mockLoadContents(List<ContentEntity> data) {
     mockLoadContentsCall().thenAnswer((_) async => data);
   }
 
@@ -55,7 +55,7 @@ void main() {
     loadContents = MockLoadContents();
     sut = GetxFeedPresenter(loadContents: loadContents);
 
-    mockLoadSurveys(mockValidData());
+    mockLoadContents(mockValidData());
   });
 
   test('Should call LoadContents on loadData', () async {
