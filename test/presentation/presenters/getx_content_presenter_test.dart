@@ -37,6 +37,8 @@ class GetxContentPresenter {
         body: content.body,
       );
 
+      _isLoadingContent.value = false;
+
       final children = await loadContentChildren.fetch(contentId);
       _children.value = children
           .map((content) => ContentViewModel(
@@ -44,9 +46,10 @@ class GetxContentPresenter {
                 body: content.body,
               ))
           .toList();
+
+      _isLoadingChildren.value = false;
     } on DomainError {
       _content.subject.addError(UIError.unexpected.description);
-    } finally {
       _isLoadingContent.value = false;
       _isLoadingChildren.value = false;
     }
