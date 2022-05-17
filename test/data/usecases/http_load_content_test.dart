@@ -52,6 +52,17 @@ void main() {
     mockHttpData(mockValidData());
   });
 
+  test('Should throw if url is invalid', () async {
+    final sut = HttpLoadContent(
+      url: 'http://minhaurl.com',
+      httpClient: httpClient,
+    );
+
+    final future = sut.fetch(faker.guid.guid());
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
   test('Should call HttpClient with correct values', () async {
     sut.fetch(faker.guid.guid());
 

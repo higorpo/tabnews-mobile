@@ -10,6 +10,12 @@ class HttpLoadContent implements LoadContent {
   @override
   Future<ContentEntity> fetch(String slugId) async {
     try {
+      if (url.isEmpty || !url.contains(':slug')) {
+        throw DomainError.unexpected;
+      }
+
+      url.replaceAll(':slug', slugId);
+
       final response = await httpClient.request(url: url, method: 'get');
       return RemoteContentModel.fromJson(response).toEntity();
     } on HttpError catch (error) {
