@@ -29,23 +29,27 @@ class GetxContentPresenter {
     _isLoadingContent.value = true;
     _isLoadingChildren.value = true;
 
-    final content = await loadContent.fetch(contentId);
-    _content.value = ContentViewModel(
-      id: content.id,
-      title: content.title,
-      body: content.body,
-    );
+    try {
+      final content = await loadContent.fetch(contentId);
+      _content.value = ContentViewModel(
+        id: content.id,
+        title: content.title,
+        body: content.body,
+      );
 
-    final children = await loadContentChildren.fetch(contentId);
-    _children.value = children
-        .map((content) => ContentViewModel(
-              id: content.id,
-              body: content.body,
-            ))
-        .toList();
-
-    _isLoadingContent.value = false;
-    _isLoadingChildren.value = false;
+      final children = await loadContentChildren.fetch(contentId);
+      _children.value = children
+          .map((content) => ContentViewModel(
+                id: content.id,
+                body: content.body,
+              ))
+          .toList();
+    } on DomainError {
+      _content.subject.addError(UIError.unexpected.description);
+    } finally {
+      _isLoadingContent.value = false;
+      _isLoadingChildren.value = false;
+    }
   }
 }
 
@@ -110,6 +114,8 @@ void main() {
   void mockLoadContent(ContentEntity data) {
     mockLoadContentCall().thenAnswer((_) async => data);
   }
+
+  void mockLoadContentError() => mockLoadContentCall().thenThrow(DomainError.unexpected);
 
   PostExpectation mockLoadContentChildrenCall() => when(loadContentChildren.fetch(any));
 
@@ -180,6 +186,15 @@ void main() {
         ),
       ),
     );
+
+    await sut.loadData(contentId);
+  });
+
+  test('Should emit correct events on failure', () async {
+    mockLoadContentError();
+
+    expectLater(sut.isLoadingContentStream, emitsInOrder([true, false]));
+    sut.contentStream.listen(null, onError: expectAsync1((error) => expect(error, UIError.unexpected.description)));
 
     await sut.loadData(contentId);
   });
