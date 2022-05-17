@@ -51,7 +51,7 @@ void main() {
   }
 
   setUp(() {
-    url = faker.internet.httpUrl();
+    url = faker.internet.httpUrl() + '/:slug';
     httpClient = MockHttpClient();
     sut = HttpLoadContentChildren(url: url, httpClient: httpClient);
 
@@ -69,10 +69,23 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
+  test('Should use correct url', () async {
+    const url = 'http://minhaurl.com/:slug';
+    final sut = HttpLoadContentChildren(
+      url: url,
+      httpClient: httpClient,
+    );
+
+    final slugId = faker.guid.guid();
+    await sut.fetch(slugId);
+
+    verify(httpClient.request(url: url.replaceAll(':slug', slugId), method: 'get')).called(1);
+  });
+
   test('Should call HttpClient with correct values', () async {
     sut.fetch(faker.guid.guid());
 
-    verify(httpClient.request(url: url, method: 'get')).called(1);
+    verify(httpClient.request(url: anyNamed('url'), method: 'get')).called(1);
   });
 
   test('Should return children on 200', () async {

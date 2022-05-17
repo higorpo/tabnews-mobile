@@ -15,7 +15,9 @@ class HttpLoadContentChildren implements LoadContentChildren {
         throw DomainError.unexpected;
       }
 
-      final response = await httpClient.request(url: url, method: 'get');
+      String urlWithSlug = url.replaceAll(':slug', slugId);
+
+      final response = await httpClient.request(url: urlWithSlug, method: 'get');
       return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();
     } on HttpError catch (error) {
       throw error == HttpError.forbidden ? DomainError.accessDenied : DomainError.unexpected;
