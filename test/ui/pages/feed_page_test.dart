@@ -62,6 +62,12 @@ void main() {
     verify(presenter.loadData()).called(1);
   });
 
+  testWidgets('Should present refresh button on app bar', (tester) async {
+    await loadPage(tester);
+
+    expect(find.byType(IconButton), findsOneWidget);
+  });
+
   testWidgets('Should handle loading correctly', (WidgetTester tester) async {
     await loadPage(tester);
 
