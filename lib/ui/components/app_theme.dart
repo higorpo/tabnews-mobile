@@ -11,6 +11,17 @@ ThemeData makeAppTheme() {
         fontWeight: FontWeight.bold,
         color: primaryColor,
       ),
+      headline3: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: primaryColor,
+      ),
+      overline: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        letterSpacing: 0,
+        color: Color.fromRGBO(110, 119, 129, 1),
+      ),
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: primaryColor,
