@@ -199,4 +199,12 @@ void main() {
 
     expect(future, throwsA(DomainError.unexpected));
   });
+
+  test('Should throw AccessDeniedError if HttpClient returns 403', () async {
+    mockHttpError(HttpError.forbidden);
+
+    final future = sut.loadContentChildren(faker.guid.guid());
+
+    expect(future, throwsA(DomainError.accessDenied));
+  });
 }
