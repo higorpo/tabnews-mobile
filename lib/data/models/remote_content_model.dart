@@ -63,15 +63,10 @@ class RemoteContentModel {
   ContentEntity toEntity() {
     return ContentEntity(
       id: id,
-      ownerId: ownerId,
       slug: slug,
       title: title,
       body: body,
-      status: status == 'published' ? ContentStatus.published : ContentStatus.draft,
-      sourceUrl: sourceUrl,
       createdAt: DateTime.parse(createdAt),
-      updatedAt: DateTime.parse(updatedAt),
-      publishedAt: DateTime.parse(publishedAt),
       username: username,
     );
   }

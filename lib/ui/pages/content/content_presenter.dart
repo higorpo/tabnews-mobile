@@ -6,6 +6,6 @@ abstract class ContentPresenter {
   Stream<ContentViewModel?> get contentStream;
   Stream<List<ContentViewModel>> get childrenStream;
 
-  Future<void> loadData(String contentId);
+  Future<void> loadData(String slugId);
   void goToContent(String id);
 }

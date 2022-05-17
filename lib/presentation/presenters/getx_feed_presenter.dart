@@ -26,6 +26,7 @@ class GetxFeedPresenter implements FeedPresenter {
       _contents.value = contents
           .map((content) => FeedContentViewModel(
                 id: content.id,
+                slug: content.slug,
                 title: content.title,
                 username: content.username,
                 createdAt: content.createdAt.timeAgo(numericDates: false),

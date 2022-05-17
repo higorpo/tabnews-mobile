@@ -81,15 +81,10 @@ class RemoteContentChildModel {
   ContentChildEntity toEntity() {
     return ContentChildEntity(
       id: id,
-      ownerId: ownerId,
       parentId: parentId,
       slug: slug,
       body: body,
-      status: status == 'published' ? ContentStatus.published : ContentStatus.draft,
-      sourceUrl: sourceUrl,
       createdAt: DateTime.parse(createdAt),
-      updatedAt: DateTime.parse(updatedAt),
-      publishedAt: DateTime.parse(publishedAt),
       username: username,
       parentTitle: parentTitle,
       parentSlug: parentSlug,

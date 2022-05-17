@@ -1,4 +1,0 @@
-enum ContentStatus {
-  draft,
-  published,
-}

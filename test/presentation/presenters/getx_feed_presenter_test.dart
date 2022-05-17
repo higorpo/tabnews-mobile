@@ -17,28 +17,18 @@ void main() {
   List<ContentEntity> mockValidData() => [
         ContentEntity(
           id: faker.guid.guid(),
-          ownerId: faker.randomGenerator.string(50),
           slug: faker.randomGenerator.string(20),
           title: faker.randomGenerator.string(20),
           body: faker.randomGenerator.string(250),
-          status: ContentStatus.published,
-          sourceUrl: null,
           createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
-          updatedAt: faker.date.dateTime(),
-          publishedAt: faker.date.dateTime(),
           username: faker.randomGenerator.string(10),
         ),
         ContentEntity(
           id: faker.guid.guid(),
-          ownerId: faker.randomGenerator.string(50),
           slug: faker.randomGenerator.string(20),
           title: faker.randomGenerator.string(20),
           body: faker.randomGenerator.string(250),
-          status: ContentStatus.published,
-          sourceUrl: null,
           createdAt: DateTime.now().subtract(const Duration(days: 2)),
-          updatedAt: faker.date.dateTime(),
-          publishedAt: faker.date.dateTime(),
           username: faker.randomGenerator.string(10),
         ),
       ];
@@ -69,12 +59,14 @@ void main() {
     sut.contentsStream.listen(expectAsync1((contents) => expect(contents, [
           FeedContentViewModel(
             id: contents[0].id,
+            slug: contents[0].slug,
             title: contents[0].title,
             username: contents[0].username,
             createdAt: '5 minutos atrás',
           ),
           FeedContentViewModel(
             id: contents[1].id,
+            slug: contents[1].slug,
             title: contents[1].title,
             username: contents[1].username,
             createdAt: '2 dias atrás',

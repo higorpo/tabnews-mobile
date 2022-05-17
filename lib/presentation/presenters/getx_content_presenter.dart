@@ -27,12 +27,12 @@ class GetxContentPresenter implements ContentPresenter {
   GetxContentPresenter({required this.loadContent, required this.loadContentChildren});
 
   @override
-  Future<void> loadData(String contentId) async {
+  Future<void> loadData(String slugId) async {
     _isLoadingContent.value = true;
     _isLoadingChildren.value = true;
 
     try {
-      final content = await loadContent.fetch(contentId);
+      final content = await loadContent.fetch(slugId);
       _content.value = ContentViewModel(
         id: content.id,
         title: content.title,
@@ -41,7 +41,7 @@ class GetxContentPresenter implements ContentPresenter {
 
       _isLoadingContent.value = false;
 
-      final children = await loadContentChildren.fetch(contentId);
+      final children = await loadContentChildren.fetch(slugId);
       _children.value = children
           .map((content) => ContentViewModel(
                 id: content.id,
@@ -58,7 +58,7 @@ class GetxContentPresenter implements ContentPresenter {
   }
 
   @override
-  void goToContent(String contentId) {
-    Get.toNamed('/content', arguments: contentId);
+  void goToContent(String slugId) {
+    Get.toNamed('/content', arguments: slugId);
   }
 }

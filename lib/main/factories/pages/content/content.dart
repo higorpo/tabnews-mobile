@@ -1,2 +1,2 @@
-export 'feed_page_factory.dart';
-export 'feed_presenter_factory.dart';
+export 'content_page_factory.dart';
+export 'content_presenter_factory.dart';

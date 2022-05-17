@@ -14,33 +14,23 @@ void main() {
   late MockLoadContent loadContent;
   late MockLoadContentChildren loadContentChildren;
   late GetxContentPresenter sut;
-  late String contentId;
+  late String contentSlug;
 
   ContentEntity mockValidContentData() => ContentEntity(
         id: faker.guid.guid(),
-        ownerId: faker.randomGenerator.string(50),
         slug: faker.randomGenerator.string(20),
         title: faker.randomGenerator.string(20),
         body: faker.randomGenerator.string(250),
-        status: ContentStatus.published,
-        sourceUrl: null,
         createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
-        updatedAt: faker.date.dateTime(),
-        publishedAt: faker.date.dateTime(),
         username: faker.randomGenerator.string(10),
       );
 
   List<ContentChildEntity> mockValidContentChildrenData() => [
         ContentChildEntity(
           id: faker.guid.guid(),
-          ownerId: faker.randomGenerator.string(50),
           slug: faker.randomGenerator.string(20),
           body: faker.randomGenerator.string(250),
-          status: ContentStatus.published,
-          sourceUrl: null,
           createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
-          updatedAt: faker.date.dateTime(),
-          publishedAt: faker.date.dateTime(),
           username: faker.randomGenerator.string(10),
           parentId: faker.randomGenerator.string(20),
           parentSlug: faker.randomGenerator.string(20),
@@ -49,14 +39,9 @@ void main() {
         ),
         ContentChildEntity(
           id: faker.guid.guid(),
-          ownerId: faker.randomGenerator.string(50),
           slug: faker.randomGenerator.string(20),
           body: faker.randomGenerator.string(250),
-          status: ContentStatus.published,
-          sourceUrl: null,
           createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
-          updatedAt: faker.date.dateTime(),
-          publishedAt: faker.date.dateTime(),
           username: faker.randomGenerator.string(10),
           parentId: faker.randomGenerator.string(20),
           parentSlug: faker.randomGenerator.string(20),
@@ -83,22 +68,22 @@ void main() {
     loadContent = MockLoadContent();
     loadContentChildren = MockLoadContentChildren();
     sut = GetxContentPresenter(loadContent: loadContent, loadContentChildren: loadContentChildren);
-    contentId = faker.guid.guid();
+    contentSlug = faker.guid.guid();
 
     mockLoadContent(mockValidContentData());
     mockLoadContentChildren(mockValidContentChildrenData());
   });
 
   test('Should call LoadContent on loadData', () async {
-    await sut.loadData(contentId);
+    await sut.loadData(contentSlug);
 
-    verify(loadContent.fetch(contentId)).called(1);
+    verify(loadContent.fetch(contentSlug)).called(1);
   });
 
   test('Should call LoadContentChildren on loadData', () async {
-    await sut.loadData(contentId);
+    await sut.loadData(contentSlug);
 
-    verify(loadContentChildren.fetch(contentId)).called(1);
+    verify(loadContentChildren.fetch(contentSlug)).called(1);
   });
 
   test('Should emit correct events to content on success', () async {
@@ -117,7 +102,7 @@ void main() {
       ),
     );
 
-    await sut.loadData(contentId);
+    await sut.loadData(contentSlug);
   });
 
   test('Should emit correct events to children on success', () async {
@@ -143,7 +128,7 @@ void main() {
       ),
     );
 
-    await sut.loadData(contentId);
+    await sut.loadData(contentSlug);
   });
 
   test('Should emit correct events on failure', () async {
@@ -152,6 +137,6 @@ void main() {
     expectLater(sut.isLoadingContentStream, emitsInOrder([true, false]));
     sut.contentStream.listen(null, onError: expectAsync1((error) => expect(error, UIError.unexpected.description)));
 
-    await sut.loadData(contentId);
+    await sut.loadData(contentSlug);
   });
 }

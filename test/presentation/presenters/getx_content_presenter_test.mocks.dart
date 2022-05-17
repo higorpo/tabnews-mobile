@@ -30,8 +30,8 @@ class MockLoadContent extends _i1.Mock implements _i3.LoadContent {
   }
 
   @override
-  _i4.Future<_i2.ContentEntity> fetch(String? contentId) => (super.noSuchMethod(
-          Invocation.method(#fetch, [contentId]),
+  _i4.Future<_i2.ContentEntity> fetch(String? slugId) => (super.noSuchMethod(
+          Invocation.method(#fetch, [slugId]),
           returnValue: Future<_i2.ContentEntity>.value(_FakeContentEntity_0()))
       as _i4.Future<_i2.ContentEntity>);
 }
@@ -46,8 +46,8 @@ class MockLoadContentChildren extends _i1.Mock
   }
 
   @override
-  _i4.Future<List<_i2.ContentChildEntity>> fetch(String? contentId) =>
-      (super.noSuchMethod(Invocation.method(#fetch, [contentId]),
+  _i4.Future<List<_i2.ContentChildEntity>> fetch(String? slugId) =>
+      (super.noSuchMethod(Invocation.method(#fetch, [slugId]),
               returnValue: Future<List<_i2.ContentChildEntity>>.value(
                   <_i2.ContentChildEntity>[]))
           as _i4.Future<List<_i2.ContentChildEntity>>);

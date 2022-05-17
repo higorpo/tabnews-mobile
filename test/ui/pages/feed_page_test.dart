@@ -49,8 +49,8 @@ void main() {
   }
 
   List<FeedContentViewModel> makeContents() => [
-        const FeedContentViewModel(id: '1', title: 'Title 1', username: 'Username 1', createdAt: 'Date 1'),
-        const FeedContentViewModel(id: '2', title: 'Title 2', username: 'Username 2', createdAt: 'Date 2'),
+        const FeedContentViewModel(id: '1', slug: 's1', title: 'Title 1', username: 'Username 1', createdAt: 'Date 1'),
+        const FeedContentViewModel(id: '2', slug: 's2', title: 'Title 2', username: 'Username 2', createdAt: 'Date 2'),
       ];
 
   tearDown(() {
@@ -148,6 +148,6 @@ void main() {
     final item = find.text('Title 1');
     await tester.tap(item);
 
-    verify(presenter.goToContent('1')).called(1);
+    verify(presenter.goToContent('s1')).called(1);
   });
 }

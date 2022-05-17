@@ -65,15 +65,10 @@ void main() {
       content,
       ContentEntity(
         id: contentData['id'],
-        ownerId: contentData['owner_id'],
         slug: contentData['slug'],
         title: contentData['title'],
         body: contentData['body'],
-        status: ContentStatus.published,
-        sourceUrl: contentData['source_url'],
         createdAt: DateTime.parse(contentData['created_at']),
-        updatedAt: DateTime.parse(contentData['updated_at']),
-        publishedAt: DateTime.parse(contentData['published_at']),
         username: contentData['username'],
       ),
     );

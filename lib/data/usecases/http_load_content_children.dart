@@ -9,7 +9,7 @@ class HttpLoadContentChildren implements LoadContentChildren {
   HttpLoadContentChildren({required this.url, required this.httpClient});
 
   @override
-  Future<List<ContentChildEntity>> fetch(String contentId) async {
+  Future<List<ContentChildEntity>> fetch(String slugId) async {
     try {
       final response = await httpClient.request(url: url, method: 'get');
       return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();
