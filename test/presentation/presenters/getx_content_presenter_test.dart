@@ -36,7 +36,13 @@ class GetxContentPresenter {
       body: content.body,
     );
 
-    await loadContentChildren.fetch(contentId);
+    final children = await loadContentChildren.fetch(contentId);
+    _children.value = children
+        .map((content) => ContentViewModel(
+              id: content.id,
+              body: content.body,
+            ))
+        .toList();
 
     _isLoadingContent.value = false;
     _isLoadingChildren.value = false;
@@ -145,6 +151,32 @@ void main() {
             title: content.title,
             body: content.body,
           ),
+        ),
+      ),
+    );
+
+    await sut.loadData(contentId);
+  });
+
+  test('Should emit correct events to children on success', () async {
+    expectLater(sut.isLoadingChildrenStream, emitsInOrder([true, false]));
+
+    sut.childrenStream.listen(
+      expectAsync1(
+        (children) => expect(
+          children,
+          [
+            ContentViewModel(
+              id: children[0].id,
+              title: null,
+              body: children[0].body,
+            ),
+            ContentViewModel(
+              id: children[1].id,
+              title: null,
+              body: children[1].body,
+            ),
+          ],
         ),
       ),
     );
