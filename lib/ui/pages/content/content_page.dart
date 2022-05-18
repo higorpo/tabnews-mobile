@@ -120,6 +120,7 @@ class ContentPage extends StatelessWidget {
                             body: content.body,
                             createdAt: content.createdAt,
                             repliesCount: content.repliesCount ?? '0',
+                            onTap: () => presenter.goToContent(content.username, content.slug),
                           )
                       ],
                     );

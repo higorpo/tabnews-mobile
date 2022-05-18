@@ -110,6 +110,7 @@ void main() {
           content!,
           ContentViewModel(
             id: content.id,
+            slug: content.slug,
             title: content.title,
             body: content.body,
             username: content.username,
@@ -132,6 +133,7 @@ void main() {
           [
             ContentViewModel(
               id: children[0].id,
+              slug: children[0].slug,
               title: null,
               body: children[0].body,
               username: children[0].username,
@@ -140,6 +142,7 @@ void main() {
             ),
             ContentViewModel(
               id: children[1].id,
+              slug: children[1].slug,
               title: null,
               body: children[1].body,
               username: children[1].username,

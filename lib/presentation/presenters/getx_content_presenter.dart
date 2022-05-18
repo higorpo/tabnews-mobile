@@ -35,6 +35,7 @@ class GetxContentPresenter implements ContentPresenter {
       final content = await loadContent.fetch(username, slugId);
       _content.value = ContentViewModel(
         id: content.id,
+        slug: content.slug,
         title: content.title,
         body: content.body,
         username: content.username,
@@ -48,6 +49,7 @@ class GetxContentPresenter implements ContentPresenter {
         _children.value = children
             .map((content) => ContentViewModel(
                   id: content.id,
+                  slug: content.slug,
                   body: content.body,
                   username: content.username,
                   createdAt: content.createdAt.timeAgo(),

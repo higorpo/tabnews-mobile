@@ -63,6 +63,7 @@ void main() {
 
   ContentViewModel makeContent() => const ContentViewModel(
         id: '1',
+        slug: 'slug',
         title: 'title',
         body: 'body',
         username: 'username',
@@ -72,6 +73,7 @@ void main() {
   List<ContentViewModel> makeChildren() => [
         const ContentViewModel(
           id: '2',
+          slug: 'slug 2',
           body: 'body 2',
           username: 'username 2',
           createdAt: 'date 2',
@@ -79,6 +81,7 @@ void main() {
         ),
         const ContentViewModel(
           id: '3',
+          slug: 'slug 3',
           body: 'body 3',
           username: 'username 3',
           createdAt: 'date 3',
@@ -262,5 +265,20 @@ void main() {
     await tester.tap(find.text('Recarregar'));
 
     verify(presenter.loadData(username, slug)).called(2);
+  });
+
+  testWidgets('Should call goToContent on item click', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    contentController.add(makeContent());
+    isLoadingChildrenController.add(false);
+    childrenController.add(makeChildren());
+    await tester.pump();
+
+    final item = find.text('username 2');
+    await tester.tap(item);
+
+    verify(presenter.goToContent('username 2', 'slug 2')).called(1);
   });
 }

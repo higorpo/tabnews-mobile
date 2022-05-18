@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class ContentViewModel extends Equatable {
   final String id;
+  final String slug;
   final String? title;
   final String body;
   final String username;
@@ -10,6 +11,7 @@ class ContentViewModel extends Equatable {
 
   const ContentViewModel({
     required this.id,
+    required this.slug,
     this.title,
     required this.body,
     required this.username,
