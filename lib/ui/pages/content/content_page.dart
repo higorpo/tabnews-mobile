@@ -113,7 +113,11 @@ class ContentPage extends StatelessWidget {
                     }
 
                     if (snapshots.item4.hasError) {
-                      return Text(snapshots.item4.error.toString(), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center);
+                      return Text(
+                        snapshots.item4.error.toString(),
+                        style: const TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      );
                     }
 
                     if (!snapshots.item4.hasData || snapshots.item4.data!.isEmpty) {
