@@ -157,4 +157,18 @@ void main() {
     expect(find.text('Recarregar'), findsOneWidget);
     expect(find.text('Title 1'), findsNothing);
   });
+
+  testWidgets('Should present error if childrenStream fails', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    isLoadingChildrenController.add(false);
+    contentController.add(const ContentViewModel(id: '1', title: 'title', body: 'body', username: 'username', createdAt: 'date'));
+    childrenController.addError(UIError.unexpected.description);
+    await tester.pump();
+
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
+    expect(find.text('title'), findsOneWidget);
+    expect(find.text('username'), findsOneWidget);
+  });
 }
