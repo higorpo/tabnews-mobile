@@ -37,6 +37,8 @@ class GetxContentPresenter implements ContentPresenter {
         id: content.id,
         title: content.title,
         body: content.body,
+        username: content.username,
+        createdAt: content.createdAt.timeAgo(),
       );
 
       _isLoadingContent.value = false;
@@ -47,6 +49,8 @@ class GetxContentPresenter implements ContentPresenter {
             .map((content) => ContentViewModel(
                   id: content.id,
                   body: content.body,
+                  username: content.username,
+                  createdAt: content.createdAt.timeAgo(),
                 ))
             .toList();
       } on DomainError {

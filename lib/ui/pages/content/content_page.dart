@@ -5,6 +5,7 @@ import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 import '../../components/components.dart';
 import 'content_presenter.dart';
+import 'content_viewmodel.dart';
 
 class ContentPage extends StatelessWidget {
   final ContentPresenter presenter;
@@ -19,7 +20,7 @@ class ContentPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Conteúdo'),
       ),
-      body: StreamBuilder4(
+      body: StreamBuilder4<bool, bool, ContentViewModel?, List<ContentViewModel>>(
           streams: Tuple4(
             presenter.isLoadingContentStream,
             presenter.isLoadingChildrenStream,
@@ -46,29 +47,37 @@ class ContentPage extends StatelessWidget {
               );
             }
 
+            if (!snapshots.item3.hasData) {
+              return const Center(
+                child: Text('Não há nada para mostrar!'),
+              );
+            }
+
+            final content = snapshots.item3.data!;
+
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Um App para o TabNews', style: Get.textTheme.headline1),
+                  if (content.title != null) Text(content.title!, style: Get.textTheme.headline1),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('username', style: Get.textTheme.overline),
+                      Text(content.username, style: Get.textTheme.overline),
                       const SizedBox(width: 5),
                       Text('•', style: Get.textTheme.overline),
                       const SizedBox(width: 5),
-                      Text('createdAt', style: Get.textTheme.overline),
+                      Text(content.createdAt, style: Get.textTheme.overline),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Markdown(
-                    data:
-                        'Eu acredito na mesma coisa Marcos e vamos tomar total cuidado na parte dos TabCoins 👍\n\nO bom é que o projeto é Open Source, então tudo vai estar aberto a todos participarem e verificarem o que está sendo feito 🤝',
+                  Markdown(
+                    data: content.body,
                     shrinkWrap: true,
-                    padding: EdgeInsets.all(0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(0),
                   ),
                   const SizedBox(height: 16),
                   const Divider(),
@@ -76,21 +85,44 @@ class ContentPage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 10, bottom: 16),
                     child: Text('Respostas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   ),
-                  const ContentReply(
-                    username: 'higor',
-                    body: 'Muito honrado em poder acompanhar tudo isso e participar desde o início! 🚀\n\nIsso é um teste.',
-                    createdAt: '8 horas atrás',
-                  ),
-                  const ContentReply(
-                    username: 'higor',
-                    body: 'Muito honrado em poder acompanhar tudo isso e participar desde o início! 🚀\n\n--',
-                    createdAt: '8 horas atrás',
-                  ),
-                  const ContentReply(
-                    username: 'higor',
-                    body: 'Muito honrado em poder acompanhar tudo isso e participar desde o início! 🚀\n\n--',
-                    createdAt: '8 horas atrás',
-                  ),
+                  Builder(
+                    builder: (context) {
+                      if (snapshots.item2.hasData && snapshots.item2.data == true) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      if (snapshots.item4.hasError) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(snapshots.item3.error.toString(), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
+                            ],
+                          ),
+                        );
+                      }
+
+                      if (!snapshots.item4.hasData) {
+                        return const Center(
+                          child: Text('Não há respostas para mostrar!'),
+                        );
+                      }
+
+                      final children = snapshots.item4.data!;
+                      return Column(
+                        children: [
+                          for (var content in children)
+                            ContentReply(
+                              username: content.username,
+                              body: content.body,
+                              createdAt: content.createdAt,
+                            )
+                        ],
+                      );
+                    },
+                  )
                 ],
               ),
             );

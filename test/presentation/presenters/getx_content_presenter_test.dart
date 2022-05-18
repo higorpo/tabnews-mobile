@@ -1,11 +1,11 @@
 import 'package:faker/faker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:tab_news/ui/ui.dart';
 import 'package:test/test.dart';
 
 import 'package:tab_news/domain/domain.dart';
 import 'package:tab_news/presentation/presentation.dart';
+import 'package:tab_news/ui/ui.dart';
 
 import 'getx_content_presenter_test.mocks.dart';
 
@@ -99,6 +99,8 @@ void main() {
             id: content.id,
             title: content.title,
             body: content.body,
+            username: content.username,
+            createdAt: '5 minutos atrás',
           ),
         ),
       ),
@@ -119,11 +121,15 @@ void main() {
               id: children[0].id,
               title: null,
               body: children[0].body,
+              username: children[0].username,
+              createdAt: '5 minutos atrás',
             ),
             ContentViewModel(
               id: children[1].id,
               title: null,
               body: children[1].body,
+              username: children[1].username,
+              createdAt: '5 minutos atrás',
             ),
           ],
         ),

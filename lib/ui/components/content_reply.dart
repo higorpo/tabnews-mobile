@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 
 class ContentReply extends StatelessWidget {
@@ -33,7 +34,12 @@ class ContentReply extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                Text(body, style: Get.textTheme.bodyText2),
+                Markdown(
+                  data: body,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.all(0),
+                ),
                 const SizedBox(height: 18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
