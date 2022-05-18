@@ -37,7 +37,7 @@ void main() {
     initStreams();
     mockStreams();
 
-    final surveysPage = GetMaterialApp(
+    final feedPage = GetMaterialApp(
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => FeedPage(presenter: presenter)),
@@ -45,7 +45,7 @@ void main() {
       ],
     );
 
-    await tester.pumpWidget(surveysPage);
+    await tester.pumpWidget(feedPage);
   }
 
   List<FeedContentViewModel> makeContents() => [
@@ -57,7 +57,7 @@ void main() {
     closeStreams();
   });
 
-  testWidgets('Should call LoadSurveys on page load', (tester) async {
+  testWidgets('Should call loadData on page load', (tester) async {
     await loadPage(tester);
 
     verify(presenter.loadData()).called(1);

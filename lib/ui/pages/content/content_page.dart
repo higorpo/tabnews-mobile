@@ -14,7 +14,7 @@ class ContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    presenter.loadData(Get.arguments[0], Get.arguments[1]);
+    presenter.loadData(Get.parameters['username']!, Get.parameters['slug']!);
 
     return Scaffold(
       appBar: AppBar(

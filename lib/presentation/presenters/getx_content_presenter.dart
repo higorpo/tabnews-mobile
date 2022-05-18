@@ -68,6 +68,6 @@ class GetxContentPresenter implements ContentPresenter {
 
   @override
   void goToContent(String username, String slug) {
-    Get.toNamed('/content', arguments: [username, slug]);
+    Get.toNamed('/content/$username/$slug');
   }
 }
