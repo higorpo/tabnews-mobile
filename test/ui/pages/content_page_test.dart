@@ -97,4 +97,29 @@ void main() {
 
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
+
+  testWidgets('Should handle loading correctly for children', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    contentController.add(const ContentViewModel(id: '1', title: 'title', body: 'body', username: 'username', createdAt: 'date'));
+
+    isLoadingChildrenController.add(true);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    isLoadingChildrenController.add(false);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+
+    isLoadingChildrenController.add(true);
+    await tester.pump();
+
+    isLoadingChildrenController.add(false);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+  });
 }
