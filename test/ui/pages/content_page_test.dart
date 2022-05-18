@@ -69,6 +69,23 @@ void main() {
         createdAt: 'date',
       );
 
+  List<ContentViewModel> makeChildren() => [
+        const ContentViewModel(
+          id: '2',
+          body: 'body 2',
+          username: 'username 2',
+          createdAt: 'date 2',
+          repliesCount: 'replies 2',
+        ),
+        const ContentViewModel(
+          id: '3',
+          body: 'body 3',
+          username: 'username 3',
+          createdAt: 'date 3',
+          repliesCount: 'replies 3',
+        ),
+      ];
+
   setUp(() {
     username = faker.internet.userName();
     slug = faker.internet.domainWord();
@@ -180,7 +197,7 @@ void main() {
     expect(find.text('username'), findsOneWidget);
   });
 
-  testWidgets('Should present content if contentsStream succeeds', (WidgetTester tester) async {
+  testWidgets('Should present content if contentStream succeeds', (WidgetTester tester) async {
     await loadPage(tester);
 
     isLoadingContentController.add(false);
@@ -193,5 +210,26 @@ void main() {
     expect(find.byKey(bodyContentKey), findsOneWidget);
     expect(find.text('username'), findsOneWidget);
     expect(find.text('date'), findsOneWidget);
+  });
+
+  testWidgets('Should present replies if childrenStream succeeds', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    contentController.add(makeContent());
+    isLoadingChildrenController.add(false);
+    childrenController.add(makeChildren());
+    await tester.pump();
+
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
+    expect(find.text('Recarregar'), findsNothing);
+    expect(find.text('Não há respostas para mostrar!'), findsNothing);
+    expect(find.byKey(bodyContentKey), findsOneWidget);
+    expect(find.text('username 2'), findsOneWidget);
+    expect(find.text('username 3'), findsOneWidget);
+    expect(find.text('date 2'), findsOneWidget);
+    expect(find.text('date 3'), findsOneWidget);
+    expect(find.text('replies 2 respostas'), findsOneWidget);
+    expect(find.text('replies 3 respostas'), findsOneWidget);
   });
 }
