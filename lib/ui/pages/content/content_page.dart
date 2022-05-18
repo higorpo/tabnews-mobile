@@ -21,6 +21,7 @@ class ContentPage extends StatelessWidget {
         title: const Text('Conteúdo'),
       ),
       body: StreamBuilder4<bool, bool, ContentViewModel?, List<ContentViewModel>>(
+          initialData: const Tuple4(true, true, null, []),
           streams: Tuple4(
             presenter.isLoadingContentStream,
             presenter.isLoadingChildrenStream,
@@ -47,7 +48,7 @@ class ContentPage extends StatelessWidget {
               );
             }
 
-            if (!snapshots.item3.hasData) {
+            if (!snapshots.item3.hasData || snapshots.item3.data == null) {
               return const Center(
                 child: Text('Não há nada para mostrar!'),
               );
@@ -89,28 +90,23 @@ class ContentPage extends StatelessWidget {
                     builder: (context) {
                       if (snapshots.item2.hasData && snapshots.item2.data == true) {
                         return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      if (snapshots.item4.hasError) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(snapshots.item3.error.toString(), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
-                            ],
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 18.0),
+                            child: CircularProgressIndicator(),
                           ),
                         );
                       }
 
-                      if (!snapshots.item4.hasData) {
-                        return const Center(
-                          child: Text('Não há respostas para mostrar!'),
-                        );
+                      if (snapshots.item4.hasError) {
+                        return Text(snapshots.item3.error.toString(), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center);
+                      }
+
+                      if (!snapshots.item4.hasData || snapshots.item4.data!.isEmpty) {
+                        return const Text('Não há respostas para mostrar!');
                       }
 
                       final children = snapshots.item4.data!;
+
                       return Column(
                         children: [
                           for (var content in children)

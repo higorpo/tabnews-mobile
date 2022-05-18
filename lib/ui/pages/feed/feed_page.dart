@@ -25,6 +25,7 @@ class FeedPage extends StatelessWidget {
         ],
       ),
       body: StreamBuilder2<bool, List<FeedContentViewModel>>(
+        initialData: const Tuple2(true, []),
         streams: Tuple2(presenter.isLoadingStream, presenter.contentsStream),
         builder: (context, snapshots) {
           if (snapshots.item1.hasData && snapshots.item1.data == true) {
