@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class FeedContentViewModel extends Equatable {
   final String id;
   final String slug;
-  final String title;
+  final String? title;
   final String username;
   final String createdAt;
 

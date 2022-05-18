@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class ContentEntity extends Equatable {
   final String id;
   final String slug;
-  final String title;
+  final String? title;
   final String body;
   final DateTime createdAt;
   final String username;
@@ -18,5 +18,5 @@ class ContentEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [id, slug, title, body, createdAt, username];
+  List get props => [id, slug, title, body, createdAt, username];
 }

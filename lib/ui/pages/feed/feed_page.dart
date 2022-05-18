@@ -55,7 +55,7 @@ class FeedPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 final content = snapshots.item2.data![index];
                 return ContentPreview(
-                  title: content.title,
+                  title: content.title!,
                   username: content.username,
                   createdAt: content.createdAt,
                   onTap: () => presenter.goToContent(content.username, content.slug),

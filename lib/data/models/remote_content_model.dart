@@ -5,7 +5,7 @@ class RemoteContentModel {
   final String id;
   final String ownerId;
   final String slug;
-  final String title;
+  final String? title;
   final String body;
   final String status;
   final String? sourceUrl;
