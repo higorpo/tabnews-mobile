@@ -1,4 +1,4 @@
-package com.example.tab_news
+package br.com.tabnews.app
 
 import io.flutter.embedding.android.FlutterActivity
 
