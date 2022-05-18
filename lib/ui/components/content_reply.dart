@@ -33,7 +33,7 @@ class ContentReply extends StatelessWidget {
                     Text(createdAt, style: Get.textTheme.overline),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 18),
                 Markdown(
                   data: body,
                   shrinkWrap: true,
