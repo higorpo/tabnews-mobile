@@ -41,15 +41,19 @@ class GetxContentPresenter implements ContentPresenter {
 
       _isLoadingContent.value = false;
 
-      final children = await loadContentChildren.fetch(slugId);
-      _children.value = children
-          .map((content) => ContentViewModel(
-                id: content.id,
-                body: content.body,
-              ))
-          .toList();
-
-      _isLoadingChildren.value = false;
+      try {
+        final children = await loadContentChildren.fetch(slugId);
+        _children.value = children
+            .map((content) => ContentViewModel(
+                  id: content.id,
+                  body: content.body,
+                ))
+            .toList();
+      } on DomainError {
+        _children.subject.addError(UIError.unexpected.description);
+      } finally {
+        _isLoadingChildren.value = false;
+      }
     } on DomainError {
       _content.subject.addError(UIError.unexpected.description);
       _isLoadingContent.value = false;
