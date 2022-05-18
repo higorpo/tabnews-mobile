@@ -130,7 +130,7 @@ void main() {
     expect(find.text('Date 2'), findsWidgets);
   });
 
-  testWidgets('Should call LoadContents on reload button', (WidgetTester tester) async {
+  testWidgets('Should call loadData on reload button', (WidgetTester tester) async {
     await loadPage(tester);
 
     isLoadingController.add(false);

@@ -45,7 +45,8 @@ class ContentPage extends StatelessWidget {
                 children: [
                   Text(snapshots.item3.error.toString(), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
                   const SizedBox(height: 10),
-                  ElevatedButton(child: const Text('Recarregar'), onPressed: () => presenter.loadData(Get.arguments[0], Get.arguments[1])),
+                  ElevatedButton(
+                      child: const Text('Recarregar'), onPressed: () => presenter.loadData(Get.parameters['username']!, Get.parameters['slug']!)),
                 ],
               ),
             );

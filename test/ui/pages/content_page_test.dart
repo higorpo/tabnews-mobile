@@ -98,7 +98,7 @@ void main() {
   testWidgets('Should call loadData on page load', (tester) async {
     await loadPage(tester);
 
-    verify(presenter.loadData(any, any)).called(1);
+    verify(presenter.loadData(username, slug)).called(1);
   });
 
   testWidgets('Should handle loading correctly for content', (WidgetTester tester) async {
@@ -250,5 +250,17 @@ void main() {
     expect(find.text('date 3'), findsNothing);
     expect(find.text('replies 2 respostas'), findsNothing);
     expect(find.text('replies 3 respostas'), findsNothing);
+  });
+
+  testWidgets('Should call loadData on reload button', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    contentController.addError(UIError.unexpected.description);
+    await tester.pump();
+
+    await tester.tap(find.text('Recarregar'));
+
+    verify(presenter.loadData(username, slug)).called(2);
   });
 }
