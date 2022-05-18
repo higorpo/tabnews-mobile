@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/components.dart';
 import 'content_presenter.dart';
@@ -93,13 +91,9 @@ class ContentPage extends StatelessWidget {
                     ],
                   ),
                 const SizedBox(height: 16),
-                Markdown(
+                MarkdownViewer(
                   key: bodyContentKey,
                   data: content.body,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  onTapLink: _handleOpenLink,
                 ),
                 const SizedBox(height: 16),
                 const Divider(),
@@ -148,12 +142,5 @@ class ContentPage extends StatelessWidget {
         },
       ),
     );
-  }
-
-  void _handleOpenLink(text, href, title) {
-    if (href != null) {
-      final url = Uri.parse(href);
-      launchUrl(url, mode: LaunchMode.externalApplication);
-    }
   }
 }

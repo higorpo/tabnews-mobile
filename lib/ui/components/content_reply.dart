@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
+
+import 'markdown.dart';
 
 class ContentReply extends StatelessWidget {
   final String username;
@@ -36,11 +37,8 @@ class ContentReply extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 18),
-                Markdown(
+                MarkdownViewer(
                   data: body,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
                 ),
                 const SizedBox(height: 18),
                 Row(
