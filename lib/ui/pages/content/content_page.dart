@@ -31,7 +31,7 @@ class ContentPage extends StatelessWidget {
           presenter.childrenStream,
         ),
         builder: (context, snapshots) {
-          if (snapshots.item1.data == true) {
+          if (snapshots.item1.hasData && snapshots.item1.data == true) {
             return const Center(
               child: CircularProgressIndicator(),
             );

@@ -103,6 +103,7 @@ void main() {
   testWidgets('Should present error if contentsStream fails', (WidgetTester tester) async {
     await loadPage(tester);
 
+    isLoadingController.add(false);
     contentsController.addError(UIError.unexpected.description);
     await tester.pump();
 
@@ -114,6 +115,7 @@ void main() {
   testWidgets('Should present list if contentsStream succeeds', (WidgetTester tester) async {
     await loadPage(tester);
 
+    isLoadingController.add(false);
     contentsController.add(makeContents());
     await tester.pump();
 
@@ -131,6 +133,7 @@ void main() {
   testWidgets('Should call LoadContents on reload button', (WidgetTester tester) async {
     await loadPage(tester);
 
+    isLoadingController.add(false);
     contentsController.addError(UIError.unexpected.description);
     await tester.pump();
 
@@ -142,6 +145,7 @@ void main() {
   testWidgets('Should call goToContent on item click', (WidgetTester tester) async {
     await loadPage(tester);
 
+    isLoadingController.add(false);
     contentsController.add(makeContents());
     await tester.pump();
 
