@@ -224,12 +224,31 @@ void main() {
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
     expect(find.text('Recarregar'), findsNothing);
     expect(find.text('Não há respostas para mostrar!'), findsNothing);
-    expect(find.byKey(bodyContentKey), findsOneWidget);
     expect(find.text('username 2'), findsOneWidget);
     expect(find.text('username 3'), findsOneWidget);
     expect(find.text('date 2'), findsOneWidget);
     expect(find.text('date 3'), findsOneWidget);
     expect(find.text('replies 2 respostas'), findsOneWidget);
     expect(find.text('replies 3 respostas'), findsOneWidget);
+  });
+
+  testWidgets('Should present message if childrenStream succeeds and it is empty', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    contentController.add(makeContent());
+    isLoadingChildrenController.add(false);
+    childrenController.add([]);
+    await tester.pump();
+
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
+    expect(find.text('Recarregar'), findsNothing);
+    expect(find.text('Não há respostas para mostrar!'), findsOneWidget);
+    expect(find.text('username 2'), findsNothing);
+    expect(find.text('username 3'), findsNothing);
+    expect(find.text('date 2'), findsNothing);
+    expect(find.text('date 3'), findsNothing);
+    expect(find.text('replies 2 respostas'), findsNothing);
+    expect(find.text('replies 3 respostas'), findsNothing);
   });
 }
