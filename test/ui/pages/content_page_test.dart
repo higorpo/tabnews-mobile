@@ -122,4 +122,15 @@ void main() {
 
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
+
+  testWidgets('Should not show replies if content loading is true', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(true);
+
+    await tester.pump();
+
+    expect(find.byKey(loadingChildrenKey), findsNothing);
+    expect(find.text('Respostas'), findsNothing);
+  });
 }

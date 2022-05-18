@@ -7,6 +7,8 @@ import '../../components/components.dart';
 import 'content_presenter.dart';
 import 'content_viewmodel.dart';
 
+const loadingChildrenKey = Key('loadingChildrenKey');
+
 class ContentPage extends StatelessWidget {
   final ContentPresenter presenter;
 
@@ -92,7 +94,7 @@ class ContentPage extends StatelessWidget {
                       return const Center(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 18.0),
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(key: loadingChildrenKey),
                         ),
                       );
                     }
