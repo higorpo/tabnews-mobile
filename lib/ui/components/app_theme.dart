@@ -7,7 +7,7 @@ ThemeData makeAppTheme() {
     primaryColor: primaryColor,
     textTheme: const TextTheme(
       headline1: TextStyle(
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: FontWeight.bold,
         color: primaryColor,
       ),
