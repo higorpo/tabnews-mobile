@@ -133,4 +133,16 @@ void main() {
     expect(find.byKey(loadingChildrenKey), findsNothing);
     expect(find.text('Respostas'), findsNothing);
   });
+
+  testWidgets('Should show replies if content loading is false', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    contentController.add(const ContentViewModel(id: '1', title: 'title', body: 'body', username: 'username', createdAt: 'date'));
+
+    await tester.pump();
+
+    expect(find.byKey(loadingChildrenKey), findsOneWidget);
+    expect(find.text('Respostas'), findsOneWidget);
+  });
 }
