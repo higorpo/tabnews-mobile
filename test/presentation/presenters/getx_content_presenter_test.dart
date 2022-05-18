@@ -24,6 +24,7 @@ void main() {
         body: faker.randomGenerator.string(250),
         createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
         username: faker.randomGenerator.string(10),
+        parentUsername: faker.randomGenerator.string(10),
       );
 
   List<ContentChildEntity> mockValidContentChildrenData() => [
@@ -115,6 +116,7 @@ void main() {
             body: content.body,
             username: content.username,
             createdAt: '5 minutos atrás',
+            parentUsername: content.parentUsername,
           ),
         ),
       ),

@@ -78,6 +78,22 @@ class ContentPage extends StatelessWidget {
                     Text(content.createdAt, style: Get.textTheme.overline),
                   ],
                 ),
+                if (content.parentUsername != null)
+                  Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.reply,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 10),
+                          Text('Em resposta a ${content.parentUsername}', style: Get.textTheme.overline),
+                        ],
+                      ),
+                    ],
+                  ),
                 const SizedBox(height: 16),
                 Markdown(
                   key: bodyContentKey,

@@ -13,6 +13,7 @@ class RemoteContentModel {
   final String updatedAt;
   final String publishedAt;
   final String username;
+  final String? parentUsername;
 
   RemoteContentModel({
     required this.id,
@@ -26,6 +27,7 @@ class RemoteContentModel {
     required this.updatedAt,
     required this.publishedAt,
     required this.username,
+    required this.parentUsername,
   });
 
   factory RemoteContentModel.fromJson(Map json) {
@@ -41,6 +43,7 @@ class RemoteContentModel {
       'updated_at',
       'published_at',
       'username',
+      'parent_username',
     ])) {
       throw HttpError.invalidData;
     }
@@ -57,6 +60,7 @@ class RemoteContentModel {
       updatedAt: json['updated_at'],
       publishedAt: json['published_at'],
       username: json['username'],
+      parentUsername: json['parent_username'],
     );
   }
 
@@ -68,6 +72,7 @@ class RemoteContentModel {
       body: body,
       createdAt: DateTime.parse(createdAt),
       username: username,
+      parentUsername: parentUsername,
     );
   }
 }

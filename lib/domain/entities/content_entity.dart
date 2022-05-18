@@ -7,6 +7,7 @@ class ContentEntity extends Equatable {
   final String body;
   final DateTime createdAt;
   final String username;
+  final String? parentUsername;
 
   const ContentEntity({
     required this.id,
@@ -15,8 +16,9 @@ class ContentEntity extends Equatable {
     required this.body,
     required this.createdAt,
     required this.username,
+    this.parentUsername,
   });
 
   @override
-  List get props => [id, slug, title, body, createdAt, username];
+  List get props => [id, slug, title, body, createdAt, username, parentUsername];
 }

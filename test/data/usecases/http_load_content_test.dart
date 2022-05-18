@@ -30,7 +30,7 @@ void main() {
         'username': faker.randomGenerator.string(10),
         'parent_title': null,
         'parent_slug': null,
-        'parent_username': null,
+        'parent_username': faker.randomGenerator.string(10),
       };
 
   PostExpectation mockRequest() => when(httpClient.request(url: anyNamed('url'), method: anyNamed('method')));
@@ -95,6 +95,7 @@ void main() {
         body: contentData['body'],
         createdAt: DateTime.parse(contentData['created_at']),
         username: contentData['username'],
+        parentUsername: contentData['parent_username'],
       ),
     );
   });

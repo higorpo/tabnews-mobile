@@ -40,6 +40,7 @@ class GetxContentPresenter implements ContentPresenter {
         body: content.body,
         username: content.username,
         createdAt: content.createdAt.timeAgo(),
+        parentUsername: content.parentUsername,
       );
 
       _isLoadingContent.value = false;

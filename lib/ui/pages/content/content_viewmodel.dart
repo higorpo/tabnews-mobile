@@ -8,6 +8,7 @@ class ContentViewModel extends Equatable {
   final String username;
   final String createdAt;
   final String? repliesCount;
+  final String? parentUsername;
 
   const ContentViewModel({
     required this.id,
@@ -17,8 +18,9 @@ class ContentViewModel extends Equatable {
     required this.username,
     required this.createdAt,
     this.repliesCount,
+    this.parentUsername,
   });
 
   @override
-  List get props => [id, title, body, username, createdAt, repliesCount];
+  List get props => [id, title, body, username, createdAt, repliesCount, parentUsername];
 }
