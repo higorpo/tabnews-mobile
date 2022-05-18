@@ -63,7 +63,7 @@ void main() {
 
   setUp(() {
     username = faker.internet.userName();
-    slug = faker.randomGenerator.string(20).replaceAll('/', '');
+    slug = faker.internet.domainWord();
   });
 
   tearDown(() {
@@ -74,5 +74,27 @@ void main() {
     await loadPage(tester);
 
     verify(presenter.loadData(any, any)).called(1);
+  });
+
+  testWidgets('Should handle loading correctly for content', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(true);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    isLoadingContentController.add(false);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+
+    isLoadingContentController.add(true);
+    await tester.pump();
+
+    isLoadingContentController.add(false);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 }
