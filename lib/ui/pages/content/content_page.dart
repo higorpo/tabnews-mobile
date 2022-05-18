@@ -118,6 +118,7 @@ class ContentPage extends StatelessWidget {
                               username: content.username,
                               body: content.body,
                               createdAt: content.createdAt,
+                              repliesCount: content.repliesCount ?? '0',
                             )
                         ],
                       );

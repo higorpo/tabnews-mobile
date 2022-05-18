@@ -6,9 +6,11 @@ class ContentReply extends StatelessWidget {
   final String username;
   final String body;
   final String createdAt;
+  final String repliesCount;
   final GestureTapCallback? onTap;
 
-  const ContentReply({Key? key, required this.username, required this.body, required this.createdAt, this.onTap}) : super(key: key);
+  const ContentReply({Key? key, required this.username, required this.body, required this.createdAt, required this.repliesCount, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +47,10 @@ class ContentReply extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      children: const [
-                        Icon(Icons.comment),
-                        SizedBox(width: 10),
-                        Text('9 respostas'),
+                      children: [
+                        const Icon(Icons.comment),
+                        const SizedBox(width: 10),
+                        Text('$repliesCount respostas'),
                       ],
                     ),
                     const Icon(Icons.chevron_right_rounded),

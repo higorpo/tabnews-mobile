@@ -18,5 +18,5 @@ class ContentViewModel extends Equatable {
   });
 
   @override
-  List get props => [id, title, body, username, createdAt];
+  List get props => [id, title, body, username, createdAt, repliesCount];
 }

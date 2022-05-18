@@ -37,6 +37,19 @@ void main() {
           parentSlug: faker.randomGenerator.string(20),
           parentTitle: faker.randomGenerator.string(20),
           parentUsername: faker.randomGenerator.string(10),
+          children: [
+            ContentChildEntity(
+              id: faker.guid.guid(),
+              slug: faker.randomGenerator.string(20),
+              body: faker.randomGenerator.string(250),
+              createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
+              username: faker.randomGenerator.string(10),
+              parentId: faker.randomGenerator.string(20),
+              parentSlug: faker.randomGenerator.string(20),
+              parentTitle: faker.randomGenerator.string(20),
+              parentUsername: faker.randomGenerator.string(10),
+            ),
+          ],
         ),
         ContentChildEntity(
           id: faker.guid.guid(),
@@ -123,6 +136,7 @@ void main() {
               body: children[0].body,
               username: children[0].username,
               createdAt: '5 minutos atrás',
+              repliesCount: '1',
             ),
             ContentViewModel(
               id: children[1].id,
@@ -130,6 +144,7 @@ void main() {
               body: children[1].body,
               username: children[1].username,
               createdAt: '5 minutos atrás',
+              repliesCount: '0',
             ),
           ],
         ),

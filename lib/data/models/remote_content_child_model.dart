@@ -13,7 +13,7 @@ class RemoteContentChildModel {
   final String updatedAt;
   final String publishedAt;
   final String username;
-  final String parentTitle;
+  final String? parentTitle;
   final String parentSlug;
   final String parentUsername;
   final List<RemoteContentChildModel> children;

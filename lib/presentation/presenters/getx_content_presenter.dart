@@ -51,6 +51,7 @@ class GetxContentPresenter implements ContentPresenter {
                   body: content.body,
                   username: content.username,
                   createdAt: content.createdAt.timeAgo(),
+                  repliesCount: content.children.length.toString(),
                 ))
             .toList();
       } on DomainError {
