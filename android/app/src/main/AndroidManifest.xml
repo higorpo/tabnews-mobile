@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.tabnews.app">
    <application
-        android:label="tab_news"
+        android:label="TabNews"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
