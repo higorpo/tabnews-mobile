@@ -40,7 +40,7 @@ class GetxFeedPresenter implements FeedPresenter {
   }
 
   @override
-  void goToContent(String id) {
-    Get.toNamed('/content', arguments: id);
+  void goToContent(String username, String slug) {
+    Get.toNamed('/content', arguments: [username, slug]);
   }
 }

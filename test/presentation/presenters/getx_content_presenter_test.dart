@@ -14,6 +14,7 @@ void main() {
   late MockLoadContent loadContent;
   late MockLoadContentChildren loadContentChildren;
   late GetxContentPresenter sut;
+  late String username;
   late String contentSlug;
 
   ContentEntity mockValidContentData() => ContentEntity(
@@ -50,7 +51,7 @@ void main() {
         ),
       ];
 
-  PostExpectation mockLoadContentCall() => when(loadContent.fetch(any));
+  PostExpectation mockLoadContentCall() => when(loadContent.fetch(any, any));
 
   void mockLoadContent(ContentEntity data) {
     mockLoadContentCall().thenAnswer((_) async => data);
@@ -58,7 +59,7 @@ void main() {
 
   void mockLoadContentError() => mockLoadContentCall().thenThrow(DomainError.unexpected);
 
-  PostExpectation mockLoadContentChildrenCall() => when(loadContentChildren.fetch(any));
+  PostExpectation mockLoadContentChildrenCall() => when(loadContentChildren.fetch(any, any));
 
   void mockLoadContentChildren(List<ContentChildEntity> data) {
     mockLoadContentChildrenCall().thenAnswer((_) async => data);
@@ -68,6 +69,7 @@ void main() {
     loadContent = MockLoadContent();
     loadContentChildren = MockLoadContentChildren();
     sut = GetxContentPresenter(loadContent: loadContent, loadContentChildren: loadContentChildren);
+    username = faker.internet.userName();
     contentSlug = faker.guid.guid();
 
     mockLoadContent(mockValidContentData());
@@ -75,15 +77,15 @@ void main() {
   });
 
   test('Should call LoadContent on loadData', () async {
-    await sut.loadData(contentSlug);
+    await sut.loadData(username, contentSlug);
 
-    verify(loadContent.fetch(contentSlug)).called(1);
+    verify(loadContent.fetch(username, contentSlug)).called(1);
   });
 
   test('Should call LoadContentChildren on loadData', () async {
-    await sut.loadData(contentSlug);
+    await sut.loadData(username, contentSlug);
 
-    verify(loadContentChildren.fetch(contentSlug)).called(1);
+    verify(loadContentChildren.fetch(username, contentSlug)).called(1);
   });
 
   test('Should emit correct events to content on success', () async {
@@ -102,7 +104,7 @@ void main() {
       ),
     );
 
-    await sut.loadData(contentSlug);
+    await sut.loadData(username, contentSlug);
   });
 
   test('Should emit correct events to children on success', () async {
@@ -128,7 +130,7 @@ void main() {
       ),
     );
 
-    await sut.loadData(contentSlug);
+    await sut.loadData(username, contentSlug);
   });
 
   test('Should emit correct events on failure', () async {
@@ -137,6 +139,6 @@ void main() {
     expectLater(sut.isLoadingContentStream, emitsInOrder([true, false]));
     sut.contentStream.listen(null, onError: expectAsync1((error) => expect(error, UIError.unexpected.description)));
 
-    await sut.loadData(contentSlug);
+    await sut.loadData(username, contentSlug);
   });
 }

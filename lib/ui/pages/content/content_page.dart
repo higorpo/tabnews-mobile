@@ -13,7 +13,7 @@ class ContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    presenter.loadData(Get.arguments);
+    presenter.loadData(Get.arguments[0], Get.arguments[1]);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +40,7 @@ class ContentPage extends StatelessWidget {
                   children: [
                     Text(snapshots.item3.error.toString(), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
                     const SizedBox(height: 10),
-                    ElevatedButton(child: const Text('Recarregar'), onPressed: () => presenter.loadData(Get.arguments)),
+                    ElevatedButton(child: const Text('Recarregar'), onPressed: () => presenter.loadData(Get.arguments[0], Get.arguments[1])),
                   ],
                 ),
               );

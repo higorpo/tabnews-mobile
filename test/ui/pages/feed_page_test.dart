@@ -148,6 +148,6 @@ void main() {
     final item = find.text('Title 1');
     await tester.tap(item);
 
-    verify(presenter.goToContent('s1')).called(1);
+    verify(presenter.goToContent('Username 1', 's1')).called(1);
   });
 }

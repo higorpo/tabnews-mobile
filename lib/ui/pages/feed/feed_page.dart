@@ -57,7 +57,7 @@ class FeedPage extends StatelessWidget {
                   title: content.title,
                   username: content.username,
                   createdAt: content.createdAt,
-                  onTap: () => presenter.goToContent(content.slug),
+                  onTap: () => presenter.goToContent(content.username, content.slug),
                 );
               },
             );

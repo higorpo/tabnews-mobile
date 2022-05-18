@@ -5,6 +5,6 @@ import '../http/http.dart';
 LoadContentChildren makeHttpLoadContentChildren() {
   return HttpLoadContentChildren(
     httpClient: makeHttpAdapter(),
-    url: makeApiUrl('contents/:slug/children'),
+    url: makeApiUrl('contents/:username/:slug/children'),
   );
 }

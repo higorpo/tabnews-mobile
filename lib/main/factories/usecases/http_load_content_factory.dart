@@ -5,6 +5,6 @@ import '../http/http.dart';
 LoadContent makeHttpLoadContent() {
   return HttpLoadContent(
     httpClient: makeHttpAdapter(),
-    url: makeApiUrl('contents/:slug'),
+    url: makeApiUrl('contents/:username/:slug'),
   );
 }

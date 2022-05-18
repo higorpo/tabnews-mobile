@@ -9,13 +9,13 @@ class HttpLoadContentChildren implements LoadContentChildren {
   HttpLoadContentChildren({required this.url, required this.httpClient});
 
   @override
-  Future<List<ContentChildEntity>> fetch(String slugId) async {
+  Future<List<ContentChildEntity>> fetch(String username, String slugId) async {
     try {
-      if (url.isEmpty || !url.contains(':slug')) {
+      if (url.isEmpty || !url.contains(':username') || !url.contains(':slug')) {
         throw DomainError.unexpected;
       }
 
-      String urlWithSlug = url.replaceAll(':slug', slugId);
+      String urlWithSlug = url.replaceAll(':username', username).replaceAll(':slug', slugId);
 
       final response = await httpClient.request(url: urlWithSlug, method: 'get');
       return response.map<ContentChildEntity>((map) => RemoteContentChildModel.fromJson(map).toEntity()).toList();

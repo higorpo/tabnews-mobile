@@ -45,7 +45,7 @@ void main() {
   }
 
   setUp(() {
-    url = faker.internet.httpUrl() + '/:slug';
+    url = faker.internet.httpUrl() + '/:username/:slug';
     httpClient = MockHttpClient();
     sut = HttpLoadContent(url: url, httpClient: httpClient);
 
@@ -58,32 +58,33 @@ void main() {
       httpClient: httpClient,
     );
 
-    final future = sut.fetch(faker.guid.guid());
+    final future = sut.fetch(faker.internet.userName(), faker.guid.guid());
 
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Should parse slug on url', () async {
-    const url = 'http://minhaurl.com/:slug';
+  test('Should parse username and slug on url', () async {
+    const url = 'http://minhaurl.com/:username/:slug';
     final sut = HttpLoadContent(
       url: url,
       httpClient: httpClient,
     );
 
     final slugId = faker.guid.guid();
-    await sut.fetch(slugId);
+    final username = faker.internet.userName();
+    await sut.fetch(username, slugId);
 
-    verify(httpClient.request(url: url.replaceAll(':slug', slugId), method: 'get')).called(1);
+    verify(httpClient.request(url: url.replaceAll(':username', username).replaceAll(':slug', slugId), method: 'get')).called(1);
   });
 
   test('Should call HttpClient with correct values', () async {
-    sut.fetch(faker.guid.guid());
+    sut.fetch(faker.internet.userName(), faker.guid.guid());
 
     verify(httpClient.request(url: anyNamed('url'), method: 'get')).called(1);
   });
 
   test('Should return a content on 200', () async {
-    final content = await sut.fetch(faker.guid.guid());
+    final content = await sut.fetch(faker.internet.userName(), faker.guid.guid());
 
     expect(
       content,
@@ -101,7 +102,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {
     mockHttpData({'invalid_key': 'invalid_data'});
 
-    final future = sut.fetch(faker.guid.guid());
+    final future = sut.fetch(faker.internet.userName(), faker.guid.guid());
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -109,7 +110,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 404', () async {
     mockHttpError(HttpError.notFound);
 
-    final future = sut.fetch(faker.guid.guid());
+    final future = sut.fetch(faker.internet.userName(), faker.guid.guid());
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -117,7 +118,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 500', () async {
     mockHttpError(HttpError.serverError);
 
-    final future = sut.fetch(faker.guid.guid());
+    final future = sut.fetch(faker.internet.userName(), faker.guid.guid());
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -125,7 +126,7 @@ void main() {
   test('Should throw AccessDeniedError if HttpClient returns 403', () async {
     mockHttpError(HttpError.forbidden);
 
-    final future = sut.fetch(faker.guid.guid());
+    final future = sut.fetch(faker.internet.userName(), faker.guid.guid());
 
     expect(future, throwsA(DomainError.accessDenied));
   });

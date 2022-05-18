@@ -41,7 +41,7 @@ class MockFeedPresenter extends _i1.Mock implements _i2.FeedPresenter {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  void goToContent(String? id) =>
-      super.noSuchMethod(Invocation.method(#goToContent, [id]),
+  void goToContent(String? username, String? slug) =>
+      super.noSuchMethod(Invocation.method(#goToContent, [username, slug]),
           returnValueForMissingStub: null);
 }

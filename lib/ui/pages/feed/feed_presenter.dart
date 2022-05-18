@@ -5,5 +5,5 @@ abstract class FeedPresenter {
   Stream<List<FeedContentViewModel>> get contentsStream;
 
   Future<void> loadData();
-  void goToContent(String id);
+  void goToContent(String username, String slug);
 }
