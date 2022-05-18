@@ -21,9 +21,7 @@ class ContentPage extends StatelessWidget {
     presenter.loadData(Get.parameters['username']!, Get.parameters['slug']!);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Conteúdo'),
-      ),
+      appBar: AppBar(),
       body: StreamBuilder4<bool, bool, ContentViewModel?, List<ContentViewModel>>(
         initialData: const Tuple4(true, true, null, []),
         streams: Tuple4(
