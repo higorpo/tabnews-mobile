@@ -18,6 +18,7 @@ dependencies:
   get: ^4.6.1
   multiple_stream_builder: ^2.0.0
   flutter_markdown: ^0.6.10
+  url_launcher: ^6.1.2
 
 dev_dependencies:
   flutter_test:
