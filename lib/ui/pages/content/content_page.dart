@@ -8,6 +8,7 @@ import 'content_presenter.dart';
 import 'content_viewmodel.dart';
 
 const loadingChildrenKey = Key('loadingChildrenKey');
+const bodyContentKey = Key('bodyContentKey');
 
 class ContentPage extends StatelessWidget {
   final ContentPresenter presenter;
@@ -77,6 +78,7 @@ class ContentPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Markdown(
+                  key: bodyContentKey,
                   data: content.body,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

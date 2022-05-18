@@ -61,6 +61,14 @@ void main() {
     await tester.pumpWidget(contentPage);
   }
 
+  ContentViewModel makeContent() => const ContentViewModel(
+        id: '1',
+        title: 'title',
+        body: 'body',
+        username: 'username',
+        createdAt: 'date',
+      );
+
   setUp(() {
     username = faker.internet.userName();
     slug = faker.internet.domainWord();
@@ -102,7 +110,7 @@ void main() {
     await loadPage(tester);
 
     isLoadingContentController.add(false);
-    contentController.add(const ContentViewModel(id: '1', title: 'title', body: 'body', username: 'username', createdAt: 'date'));
+    contentController.add(makeContent());
 
     isLoadingChildrenController.add(true);
     await tester.pump();
@@ -138,7 +146,7 @@ void main() {
     await loadPage(tester);
 
     isLoadingContentController.add(false);
-    contentController.add(const ContentViewModel(id: '1', title: 'title', body: 'body', username: 'username', createdAt: 'date'));
+    contentController.add(makeContent());
 
     await tester.pump();
 
@@ -163,12 +171,27 @@ void main() {
 
     isLoadingContentController.add(false);
     isLoadingChildrenController.add(false);
-    contentController.add(const ContentViewModel(id: '1', title: 'title', body: 'body', username: 'username', createdAt: 'date'));
+    contentController.add(makeContent());
     childrenController.addError(UIError.unexpected.description);
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
     expect(find.text('title'), findsOneWidget);
     expect(find.text('username'), findsOneWidget);
+  });
+
+  testWidgets('Should present content if contentsStream succeeds', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingContentController.add(false);
+    contentController.add(makeContent());
+    await tester.pump();
+
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
+    expect(find.text('Recarregar'), findsNothing);
+    expect(find.text('title'), findsOneWidget);
+    expect(find.byKey(bodyContentKey), findsOneWidget);
+    expect(find.text('username'), findsOneWidget);
+    expect(find.text('date'), findsOneWidget);
   });
 }
